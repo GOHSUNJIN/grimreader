@@ -63,7 +63,7 @@ body.onresult .tag{display:none}
 .step svg{width:14px;height:14px}
 .step.on{color:#160d26;background:var(--ink);border-color:var(--ink)}
 .step.done{color:var(--slime);border-color:#3c6b2e}
-.dash{flex:1;height:1px;background:repeating-linear-gradient(90deg,var(--line) 0 4px,transparent 4px 8px)}
+.dash{flex:1;max-width:110px;height:1px;background:repeating-linear-gradient(90deg,var(--line) 0 4px,transparent 4px 8px)}
 body.onresult .steps{gap:4px}
 body.onresult .step{flex:1;height:4px;padding:0;border:0;border-radius:4px;background:var(--line);box-shadow:none}
 body.onresult .step span,body.onresult .step svg,body.onresult .dash{display:none}
@@ -77,7 +77,7 @@ body.onresult .step.on{background:var(--pumpkin)}
 body:not(.onresult) .foot.notally{display:none}
 
 /* ===== buttons ===== */
-.btn{display:inline-flex;justify-content:center;align-items:center;gap:8px;font:700 15px Inter,sans-serif;cursor:pointer;border:none;border-radius:12px;padding:12px 16px;color:#1b0b00;background:linear-gradient(#ff9a3d,#ff6a00);box-shadow:0 0 22px rgba(255,122,26,.3);transition:.2s}
+.btn{text-decoration:none;display:inline-flex;justify-content:center;align-items:center;gap:8px;font:700 15px Inter,sans-serif;cursor:pointer;border:none;border-radius:12px;padding:12px 16px;color:#1b0b00;background:linear-gradient(#ff9a3d,#ff6a00);box-shadow:0 0 22px rgba(255,122,26,.3);transition:.2s}
 .btn:not(:disabled):hover{transform:translateY(-1px)}
 .btn:disabled{opacity:1;cursor:not-allowed;box-shadow:none;background:none;color:var(--muted);border:1px dashed #6a5c86;font-weight:600}
 .btn.sm{font-size:13.5px;padding:8px 13px}
@@ -98,6 +98,8 @@ body:not(.onresult) .foot.notally{display:none}
 .drop:hover,.drop.over{border-color:var(--pumpkin)}
 .drop:hover .env{transform:rotate(-4deg) scale(1.05)}
 .env{transition:.3s;display:block;margin:0 auto 6px}
+.envstack{display:none;transition:.3s}
+.drop:hover .envstack{transform:translateY(-4px) rotate(-2deg)}
 .drop b{font-size:17px;margin-top:2px}
 .drop small{color:var(--muted);font-size:13.5px}
 .ways{display:flex;justify-content:center;gap:8px;margin-top:10px;flex-wrap:wrap}
@@ -136,6 +138,9 @@ textarea{display:none;width:100%;flex:1;min-height:90px;background:rgba(0,0,0,.3
 .sample{display:flex;align-items:center;gap:8px;text-align:left;font:inherit;color:var(--ink);background:var(--card2);border:1px solid var(--line);border-radius:12px;padding:9px;cursor:pointer;transition:.2s;min-width:0}
 .sample:hover{border-color:var(--pumpkin);transform:translateY(-2px)}
 .sample .ico{flex:none;width:30px;height:30px;border-radius:9px;display:grid;place-items:center}
+.sample .ico.paper{width:30px;height:36px;border-radius:0;filter:drop-shadow(0 2px 3px rgba(0,0,0,.45));transition:.2s}
+.sample .ico.paper svg{width:100%;height:100%;display:block}
+.sample:hover .ico.paper{transform:rotate(-5deg) scale(1.06)}
 .sample .st{display:flex;flex-direction:column;min-width:0}
 .sample b{font-size:13.5px;line-height:1.2}
 .sample small{font-size:12px;color:var(--muted);font-weight:400}
@@ -179,7 +184,7 @@ select{width:100%;height:100%;appearance:none;background:#1a1328;color:var(--ink
 @keyframes flick{to{transform:scale(.8,1.1);opacity:.75}}
 
 /* ===== result screen ===== */
-#result .card{gap:12px;padding:14px}
+#result .card{gap:12px;padding:14px;border-color:color-mix(in srgb,var(--u,var(--line)) 45%,var(--line));border-top:3px solid var(--u,var(--line));box-shadow:0 10px 40px rgba(0,0,0,.5),0 0 70px -14px color-mix(in srgb,var(--u,transparent) 50%,transparent)}
 .top{display:flex;justify-content:space-between;align-items:center;gap:10px;flex:none;min-width:0}
 .top .sec{flex:none}
 .from{display:flex;flex-direction:column;min-width:0}
@@ -219,10 +224,8 @@ body:not(.fit1) #pane-verdict .first{padding:14px 16px}
 .actions .sec{padding:8px 6px;min-width:0}
 .actions .sec span{overflow:hidden;text-overflow:ellipsis}
 #speak[aria-pressed=true]{border-color:var(--pumpkin);color:var(--pumpkin)}
-.hidnote{display:flex;align-items:center;gap:6px;margin:-4px 0 0;font-size:12px;color:var(--muted)}
-.hidnote svg{width:14px;height:14px;color:var(--slime)}
 /* deadline / amount / scam tiles: values line up, "Where?" sits at the bottom */
-.tiles{display:grid;grid-template-columns:repeat(3,1fr);gap:10px;min-width:0}
+.tiles{display:grid;grid-template-columns:1.4fr 1fr 1fr;gap:10px;min-width:0}
 .tile{background:var(--card2);border:1px solid var(--line);border-radius:12px;padding:9px 11px;display:flex;flex-direction:column;gap:2px;min-width:0}
 body:not(.fit1) #pane-verdict .tile{padding:11px 12px}
 button.tile{position:relative;font:inherit;color:inherit;text-align:left;cursor:pointer;transition:.2s;border-style:solid}
@@ -233,6 +236,9 @@ button.tile:hover{border-color:var(--pumpkin)}
 .tile small{color:var(--muted);font-size:12px}
 .tile .where{display:inline-flex;align-items:center;gap:4px;margin-top:auto;padding-top:4px;font-size:12px;font-weight:600;color:var(--pumpkin)}
 .tile .where svg{width:13px;height:13px;display:inline-block}
+.tiles:not(:has(.due)){grid-template-columns:repeat(3,1fr)}
+.tile.due b{font-size:30px;line-height:1.05;letter-spacing:-.01em;color:var(--u,var(--ink))}
+.tile.due b .unit{font-size:15px;font-weight:600;letter-spacing:0}
 /* warnings */
 .warn{display:flex;gap:9px;align-items:flex-start;border-radius:12px;padding:9px 11px;font-size:13.5px;line-height:1.35}
 .warn svg{margin-top:1px}
@@ -240,6 +246,10 @@ button.tile:hover{border-color:var(--pumpkin)}
 .warn.scam svg{color:var(--blood)}
 .warn.human{background:rgba(233,196,106,.1);border:1px solid var(--gold)}
 .warn.human svg{color:var(--gold)}
+#banner:empty{display:none}
+.warn.banner{border-width:2px;padding:12px 14px;font-size:14.5px;background:linear-gradient(135deg,rgba(255,90,105,.22),rgba(183,140,255,.12))}
+.warn.banner b{color:#ffd7db;font-size:15px}
+.warn.banner>svg{width:22px;height:22px}
 .radarline{display:flex;gap:6px;align-items:center;margin-top:6px;padding-top:6px;border-top:1px solid rgba(255,90,105,.35);color:var(--ink)}
 .radarline svg{color:var(--hex);width:16px;height:16px}
 /* tabs: at the bottom on phones, on top of the right column on wider screens */
@@ -264,6 +274,19 @@ ul.todo li.done .txt{text-decoration:line-through;color:var(--muted)}
 .banished span{flex:1;min-width:150px}
 .checks{font-size:12px;color:var(--muted);display:flex;align-items:center;gap:6px;margin-top:auto}
 .checks svg{width:15px;height:15px;color:var(--pumpkin)}
+#remind:empty{display:none}
+.remindcard{display:flex;align-items:center;gap:12px;flex-wrap:wrap;padding:12px 14px;border-radius:14px;border:1px solid color-mix(in srgb,var(--u,var(--pumpkin)) 50%,var(--line));background:color-mix(in srgb,var(--u,var(--pumpkin)) 9%,transparent)}
+.remindcard .ri{flex:none;width:36px;height:36px;border-radius:10px;display:grid;place-items:center;background:color-mix(in srgb,var(--u,var(--pumpkin)) 20%,transparent);color:var(--u,var(--pumpkin))}
+.remindcard .rt{flex:1;min-width:140px}
+.remindcard .rt b{display:block;font-size:15px}
+.remindcard .rt small{display:block;font-size:12px;color:var(--muted)}
+.remindcard .rb{display:flex;gap:8px;flex-wrap:wrap}
+.replypeek{display:flex;flex-direction:column;align-items:flex-start;gap:6px;text-align:left;font:inherit;color:var(--ink);background:var(--card2);border:1px dashed #6a5c86;border-radius:14px;padding:12px 14px;cursor:pointer;transition:.2s}
+.replypeek:hover{border-color:var(--pumpkin)}
+.replypeek .label{margin:0}
+.replypeek .rp{font-size:14px;line-height:1.4;color:#e2dbef;display:-webkit-box;-webkit-line-clamp:2;-webkit-box-orient:vertical;overflow:hidden}
+.replypeek .rpgo{display:inline-flex;align-items:center;gap:5px;font-size:13.5px;font-weight:600;color:var(--pumpkin)}
+.replypeek .rpgo svg{width:15px;height:15px}
 /* reply */
 .parch{flex:1;min-height:0;overflow:auto;background:var(--parch);color:var(--parch-ink);font-family:'IM Fell English',serif;font-size:15px;line-height:1.4;white-space:pre-wrap;padding:14px 16px;border-radius:6px;outline:none;box-shadow:inset 0 0 30px rgba(120,80,20,.45)}
 /* ask */
@@ -432,6 +455,8 @@ ul.todo li.done .txt{text-decoration:line-through;color:var(--muted)}
   .sample{gap:14px;padding:12px 16px}
   .sample .ico{width:44px;height:44px;border-radius:12px}
   .sample .ico svg{width:22px;height:22px}
+  .sample .ico.paper{width:40px;height:48px}
+  .sample .ico.paper svg{width:100%;height:100%}
   .sample b{font-size:15px}
   /* result */
   .rbody{display:grid;grid-template-columns:1fr 1fr;gap:20px}
@@ -452,16 +477,21 @@ ul.todo li.done .txt{text-decoration:line-through;color:var(--muted)}
   .samples{grid-auto-rows:62px}
   .sample{padding:8px 14px}
   .sample .ico{width:38px;height:38px}
+  .sample .ico.paper{width:36px;height:44px}
 }
-@media (min-width:1240px){.moon{display:block;left:2.5%}}
+/* the moon only where there's room beside the app */
+@media (min-width:1320px){.moon{display:block;left:auto;right:2.5%}}
 /* big drop zone on tablets and laptops: scale its content up so the space feels intentional */
+/* the reply preview needs the two-column layout */
+@media (max-width:699px){.replypeek{display:none}}
 @media (max-width:899px){
   .drop{min-height:150px}
   .kinds{display:none}
 }
 @media (min-width:700px) and (min-height:700px){
   .drop:not(.has){background:radial-gradient(closest-side,rgba(255,122,26,.07),transparent) center/80% 70% no-repeat,var(--card2)}
-  .drop .empty .env{width:150px;height:112px;margin-bottom:14px}
+  .drop .empty .env{display:none}
+  .drop .empty .envstack{display:block;margin:0 auto 12px}
   .drop b{font-size:22px}
   .drop small{font-size:15px}
   .drop .ways{margin-top:20px;gap:10px}
@@ -526,7 +556,17 @@ ul.todo li.done .txt{text-decoration:line-through;color:var(--muted)}
   .rbody{display:grid;grid-template-columns:1fr 1fr;gap:16px}
   .tab{flex-direction:row;justify-content:center;gap:5px;padding:8px 2px}
   .actions .sec{flex-direction:column;gap:3px;font-size:12px;padding:7px 2px}
+  .tile .t svg{display:none}
 }
+
+/* ===== calm mode: bigger text, higher contrast, no moving effects (toggle in the header) ===== */
+body.calm{--muted:#ddd6ec;--line:#5b4a78;--card:rgba(22,16,33,.97)}
+body.calm .stars,body.calm .fogwrap,body.calm .batlane,body.calm .moon{display:none}
+body.calm *,body.calm *::before,body.calm *::after{animation:none!important;transition:none!important}
+body.calm .stage .spirit{opacity:1;transform:translateY(-62px)}
+body.calm .label,body.calm .step,body.calm .tab,body.calm .prog,body.calm .checks,body.calm .fine,body.calm .foot,body.calm .from small,body.calm .tile .t,body.calm .tile small,body.calm .tile .where,body.calm .first .fl,body.calm .first .due,body.calm .sample small,body.calm .kinds span,body.calm .tomb .nm,body.calm .remindcard .rt small,body.calm .member .who small,body.calm .introsteps small{font-size:13.5px}
+body.calm .bubble,body.calm:not(.fit1) #pane-verdict .bubble,body.calm ul.todo li,body.calm .first p,body.calm .msg{font-size:16.5px}
+body.calm .sec,body.calm .chip{font-size:14.5px}
 
 /* ===== fit levels: added one by one by fit() in app.js only when something would be cut off ===== */
 body.fit1 .tag,body.fit1 .foot,body.fit1 .yard,body.fit1 .tile small{display:none}
@@ -544,8 +584,11 @@ body.fit1 .actions .sec{padding:6px 4px}
 body.fit1 ul.todo li{padding:5px 8px}
 body.fit1 .help{padding:6px 10px}
 body.fit1 .help .ico{width:28px;height:28px}
+body.fit1 .replypeek,body.fit1 .remindcard .ri{display:none}
+body.fit1 .remindcard{padding:8px 10px}
+body.fit1 .tile.due b{font-size:24px}
 
-body.fit2 .steps,body.fit2 .reaperbox,body.fit2 .bubble:before,body.fit2 .first .due,body.fit2 .help small,body.fit2 .hidnote,body.fit2 .sample small{display:none}
+body.fit2 .steps,body.fit2 .reaperbox,body.fit2 .bubble:before,body.fit2 .first .due,body.fit2 .help small,body.fit2 .sample small{display:none}
 body.fit2 h1{font-size:24px}
 body.fit2 .logo,body.fit2 .logo svg{width:34px;height:34px}
 body.fit2 .iconbtn{width:auto;min-width:34px;height:34px}
@@ -555,12 +598,13 @@ body.fit2 .first .row .btn{pointer-events:auto}
 body.fit2 .first p{padding-right:120px;min-height:30px}
 body.fit2 .warn .reasons{display:-webkit-box;-webkit-line-clamp:2;-webkit-box-orient:vertical;overflow:hidden}
 
-body.fit3 .drop .empty .env,body.fit3 .kinds,body.fit3 .actions .sec span{display:none}
+body.fit3 .drop .empty .env,body.fit3 .drop .empty .envstack,body.fit3 .remindcard .rt small,body.fit3 .kinds,body.fit3 .actions .sec span{display:none}
 body.fit3 .head{margin-bottom:-2px}
 body.fit3 .plain{font-size:15px}
 body.fit3 .first p{font-size:14px}
 body.fit3 .tile{padding:5px 8px}
 body.fit3 .tile .t{font-size:11px}
+body.fit3 .tile.due b{font-size:20px}
 body.fit3 .tile .where{font-size:0;gap:0}
 body.fit3 .tile .where svg{width:15px;height:15px}
 body.fit3 .warn{font-size:12.5px;padding:6px 9px}

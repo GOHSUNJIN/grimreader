@@ -88,6 +88,17 @@ function paintSound(){ $('soundBtn').innerHTML = ic(sound ? 'volume-2' : 'volume
 $('soundBtn').onclick = () => { sound = !sound; store.set('gr-sound', sound); paintSound(); if (sound) SFX.tick(); };
 paintSound();
 
+// ---------- calm mode: bigger text, higher contrast, no moving effects ----------
+let calm = store.get('gr-calm', false);
+function paintCalm(){
+  document.body.classList.toggle('calm', calm);
+  $('calmBtn').setAttribute('aria-pressed', calm);
+  $('calmBtn').querySelector('.lbl').textContent = calm ? 'Calm On' : 'Calm Mode';
+  setTimeout(fit, 60);
+}
+$('calmBtn').onclick = () => { calm = !calm; store.set('gr-calm', calm); paintCalm(); };
+paintCalm();
+
 // ---------- language remembered ----------
 const savedLang = store.get('gr-lang', null);
 if (savedLang && [...$('lang').options].some(o => o.text === savedLang)) $('lang').value = savedLang;
@@ -600,6 +611,7 @@ async function show(d, fresh, item){
   if (item !== currentItem) chat = [];
   currentItem = item;
   const scam = d.scam_risk === 'high', s = SPIRITS[scam ? 'scam' : d.urgency];
+  $('result').style.setProperty('--u', s.c);
   $('reaper').style.setProperty('--glow', s.c);
   $('reaper').innerHTML = reaperSVG(s.c, scam ? 'scam' : d.urgency);
   $('kind').innerHTML = miniGhost(s.c) + `<span>${s.name}</span>`; $('kind').style.color = DARK[s.c];
@@ -614,7 +626,7 @@ async function show(d, fresh, item){
   const tileTag = (w, kind) => w ? `button class="tile" type="button" data-where="${kind}" aria-label="Show where the letter says the ${kind}"` : 'div class="tile"';
   const tileEnd = w => w ? 'button' : 'div';
   $('tiles').innerHTML = [
-    `<${tileTag(dlWhere,'deadline')}><span class="t">${ic('hourglass')}Deadline</span><b>${d.deadline ? (d.days < 0 ? 'Passed' : d.days === 0 ? 'Today' : d.days + ' Day' + (d.days === 1 ? '' : 's')) : 'None'}</b><small>${d.deadline ? esc(fmtDate(d.deadline)) : ''}</small>${dlWhere ? `<span class="where">${ic('eye')}Where?</span>` : ''}</${tileEnd(dlWhere)}>`,
+    `<${tileTag(dlWhere,'deadline').replace('class="tile"', `class="tile${d.deadline ? ' due' : ''}"`)}><span class="t">${ic('hourglass')}Deadline</span><b>${d.deadline ? (d.days < 0 ? 'Passed' : d.days === 0 ? 'Today' : `${d.days}<span class="unit"> day${d.days === 1 ? '' : 's'}</span>`) : 'None'}</b><small>${d.deadline ? esc(fmtDate(d.deadline)) : ''}</small>${dlWhere ? `<span class="where">${ic('eye')}Where?</span>` : ''}</${tileEnd(dlWhere)}>`,
     `<${tileTag(amWhere,'amount')}><span class="t">${ic('coins')}Amount</span><b>${d.amount ? esc(String(d.amount).replace(/\s*\(.*\)/,'')) : 'None'}</b>${scam ? '<small>Do not pay</small>' : ''}${amWhere ? `<span class="where">${ic('eye')}Where?</span>` : ''}</${tileEnd(amWhere)}>`,
     `<div class="tile"><span class="t">${ic(risk[2])}Scam Risk</span><b style="color:${risk[3]}">${risk[0]}</b></div>`].join('');
 
@@ -625,8 +637,10 @@ async function show(d, fresh, item){
     openOverlay('whereSheet');
   });
   const w = [];
-  if (d.scam_risk !== 'low' && d.scam_reasons.length) w.push(`<div class="warn scam" id="scamBox">${ic('shield-alert')}<div><b>Why it smells like a scam:</b> <span class="reasons">${d.scam_reasons.slice(0,3).map(esc).join(' · ')}</span><div class="radarline" id="radarLine" hidden></div></div></div>`);
-  else if (d.scam_risk === 'medium') w.push(`<div class="warn scam" id="scamBox">${ic('shield-alert')}<div><b>This might be a scam.</b> Check with the real organisation first.<div class="radarline" id="radarLine" hidden></div></div></div>`);
+  const scamBox = `<div class="warn scam${scam ? ' banner' : ''}" id="scamBox">${ic('shield-alert')}<div><b>${scam ? 'Likely scam.' : 'Why it smells like a scam:'}</b> <span class="reasons">${d.scam_reasons.slice(0,3).map(esc).join(' · ')}</span><div class="radarline" id="radarLine" hidden></div></div></div>`;
+  $('banner').innerHTML = scam && d.scam_reasons.length ? scamBox : '';
+  if (!scam && d.scam_risk !== 'low' && d.scam_reasons.length) w.push(scamBox);
+  else if (d.scam_risk === 'medium' && !d.scam_reasons.length) w.push(`<div class="warn scam" id="scamBox">${ic('shield-alert')}<div><b>This might be a scam.</b> Check with the real organisation first.<div class="radarline" id="radarLine" hidden></div></div></div>`);
   if (d.needs_human) w.push(`<div class="warn human">${ic('scale')}<div><b>Get a real person to check this.</b> <button class="inlinebtn" type="button" data-open-help>Open Free Help${ic('arrow-right')}</button></div></div>`);
   $('warns').innerHTML = w.join('');
   $('warns').querySelectorAll('[data-open-help]').forEach(b => b.onclick = () => { selectTab('help'); fit(); const t = document.querySelector('.tab[data-pane="help"]'); if (t) t.focus(); });
@@ -635,7 +649,7 @@ async function show(d, fresh, item){
   const jargon = d.jargon || [];
   $('wordsBtn').hidden = !jargon.length;
   $('wordsBtn').setAttribute('aria-label', `Decode ${jargon.length} scary words`); $('wordsBtn').querySelector('span').textContent = 'Words';
-  document.querySelector('.actions').style.gridTemplateColumns = `repeat(${[canSpeak, true, true, jargon.length > 0].filter(Boolean).length}, minmax(0, 1fr))`;
+  document.querySelector('.actions').style.gridTemplateColumns = `repeat(${[canSpeak, true, jargon.length > 0].filter(Boolean).length}, minmax(0, 1fr))`;
   const pick = i => {
     $('wordchips').querySelectorAll('.chip').forEach((c, k) => c.setAttribute('aria-selected', k === i));
     const j = jargon[i], where = whereInLetter(j, letterText), multi = item.ctx && item.ctx.pages > 1;
@@ -675,7 +689,7 @@ async function show(d, fresh, item){
     const e = new Date(d.deadline+'T00:00:00'); e.setDate(e.getDate()+1);
     const details = `${clean(d.summary)}\n\nTo do:\n- ${d.actions.map(clean).join('\n- ')}`;
     const url = `https://calendar.google.com/calendar/render?action=TEMPLATE&text=${encodeURIComponent('Deadline: ' + clean(d.letter_type || 'letter'))}&dates=${d.deadline.replace(/-/g,'')}/${iso(e).replace(/-/g,'')}&details=${encodeURIComponent(details)}`;
-    $('remind').innerHTML = `${dl ? `<button class="sec" id="ics">${ic('bell')}Remind Me ${d.days >= 3 ? '3 Days' : '1 Day'} Before</button>` : ''}<a class="sec" href="${url}" target="_blank" rel="noopener">${ic('calendar-plus')}Google Calendar</a>`;
+    $('remind').innerHTML = `<div class="remindcard"><span class="ri">${ic('bell')}</span><div class="rt"><b>Don't miss ${esc(fmtDate(d.deadline))}</b><small>Add a reminder to your calendar</small></div><div class="rb">${dl ? `<button class="sec" id="ics">${ic('bell')}Remind Me ${d.days >= 3 ? '3 Days' : '1 Day'} Before</button>` : ''}<a class="btn sm" href="${url}" target="_blank" rel="noopener">${ic('calendar-plus')}Add to Calendar</a></div></div>`;
     if (dl) $('ics').onclick = async () => { try { await dl.save({ filename: 'grim-reader-deadline.ics', data: icsFor(d) }); $('ics').innerHTML = ic('check') + 'Reminder Saved'; } catch {} };
   }
 
@@ -698,9 +712,7 @@ async function show(d, fresh, item){
     if (opts.find(o => o.id === b.dataset.opt).fallback) $('shareNote').textContent = 'If nothing opened, use Copy Text and paste it into your email or messages.';
   });
   $('share').onclick = () => openOverlay('shareSheet');
-  $('copySum').onclick = () => copy(safeText, $('copySum'));
-  $('hidnote').hidden = !safe.n;
-  $('hidnote').innerHTML = safe.n ? `${ic('lock')}Share and Copy hide ${safe.n} personal detail${safe.n === 1 ? '' : 's'} like account numbers.` : '';
+  $('shareIntro').textContent = safe.n ? `Choose how to send it or copy it. ${safe.n} personal detail${safe.n === 1 ? ' like an account number is' : 's like account numbers are'} hidden for you.` : 'Choose how to send it or copy it. Personal details are hidden for you.';
   $('speak').hidden = !canSpeak; setSpeakBtn(false);
   $('speak').onclick = () => {
     const sents = [...$('summary').querySelectorAll('.sent')];
@@ -714,6 +726,10 @@ async function show(d, fresh, item){
 
   $('victoryBtn').onclick = () => openVictory(d, scam ? SPIRITS.scam : SPIRITS[d.urgency]);
   $('reply').textContent = clean(d.reply);
+  const hasReply = !scam && clean(d.reply).includes('\n');
+  $('replyPeek').hidden = !hasReply;
+  $('replyPeekTxt').textContent = hasReply ? clean(d.reply).replace(/\s+/g, ' ').slice(0, 150) + '…' : '';
+  $('replyPeek').onclick = () => { selectTab('reply'); fit(); };
   $('copy').onclick = () => copy($('reply').innerText, $('copy'));
   const passed = d.checks.filter(c => c[0] === 'ok').length;
   $('checksSum').innerHTML = `${ic('sparkles')}${passed} of ${d.checks.length} safety checks passed`;
@@ -773,9 +789,9 @@ async function openVictory(d, s){
 // ---------- judge's tour ----------
 const TOUR = [
   { sel: '.verdict', pane: 'verdict', text: 'The Grim Reader explains the letter in plain words. The headline says how urgent it is; the spirit tag adds the Halloween flavour.' },
-  { sel: '#first', pane: 'verdict', text: 'Do This First shows the next step. Mark Done ticks it off in the full list.' },
   { sel: '#tiles', pane: 'verdict', text: 'Tap Deadline or Amount to see exactly where the letter says it, so you never have to just trust the AI.' },
-  { sel: '.actions', pane: 'verdict', text: 'Listen reads it aloud. Share sends it to family with personal details hidden. Words decodes scary jargon and shows where it is.' },
+  { sel: '#first', pane: 'verdict', text: 'Do This First shows the next step. Mark Done ticks it off in the full list.' },
+  { sel: '.actions', pane: 'verdict', text: 'Listen reads it aloud. Share sends or copies it for family with personal details hidden. Words decodes scary jargon and shows where it is.' },
   { sel: '#pane-todo', pane: 'todo', text: 'Banish It: tick every step to banish the letter, then share your victory. It also sets a reminder before the deadline.' },
   { sel: '#pane-reply', pane: 'reply', text: 'A polite reply is ready to edit and copy. It never admits fault or promises money.' },
   { sel: '#pane-ask', pane: 'ask', text: 'Ask the Grim Reader follow-up questions about this letter, in your language.' },

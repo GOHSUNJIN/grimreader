@@ -24,6 +24,7 @@
     <div class="brand"><div class="logo"><svg viewBox="0 0 48 48" xmlns="http://www.w3.org/2000/svg" aria-hidden="true"><use href="#seal" width="48" height="48"/></svg></div><h1>Grim Reader</h1></div>
     <div class="headbtns">
       <button class="iconbtn" id="yardBtn" title="Your Graveyard" aria-label="Your Graveyard"><i data-i="tomb"></i><span class="lbl">Graveyard</span><span class="badge-dot" id="yardBadge" hidden></span></button>
+      <button class="iconbtn" id="calmBtn" aria-pressed="false" title="Calm Mode: bigger text, no effects" aria-label="Calm mode: bigger text and no effects"><i data-i="a-large-small"></i><span class="lbl">Calm Mode</span></button>
       <button class="iconbtn" id="soundBtn" aria-pressed="false" title="Sound Effects" aria-label="Sound effects"><i data-i="volume-x"></i></button>
       <button class="iconbtn" id="infoBtn" title="About This Project" aria-label="About this project"><i data-i="info"></i><span class="lbl">About</span></button>
     </div>
@@ -41,6 +42,7 @@
       <div class="drop" id="drop" tabindex="0" role="button" aria-label="Add a photo of your letter">
         <div class="empty">
           <svg class="env" width="86" height="64" viewBox="0 0 86 64" aria-hidden="true"><rect x="3" y="8" width="80" height="52" rx="6" fill="#efe0bd"/><path d="M3 12l40 28 40-28" fill="none" stroke="#7a5a2a" stroke-width="2.5"/><g transform="translate(31.0 27.0) scale(0.5)"><use href="#seal" width="48" height="48"/></g></svg>
+          <svg class="envstack" width="176" height="146" viewBox="0 0 120 100" aria-hidden="true"><g transform="rotate(-13 36 34)"><rect x="16" y="8" width="40" height="52" rx="3" fill="#e2cfa3"/><path d="M19 8h34a3 3 0 0 1 3 3v6H16v-6a3 3 0 0 1 3-3z" fill="#d9a43a"/><rect x="21" y="23" width="28" height="2" rx="1" fill="#c4ab7d"/><rect x="21" y="28" width="22" height="2" rx="1" fill="#c4ab7d"/></g><g transform="rotate(12 84 34)"><rect x="64" y="8" width="40" height="52" rx="3" fill="#e2cfa3"/><rect x="69" y="14" width="18" height="3" rx="1.5" fill="#b89c62"/><rect x="69" y="21" width="28" height="2" rx="1" fill="#c4ab7d"/><rect x="69" y="26" width="24" height="2" rx="1" fill="#c4ab7d"/></g><rect x="40" y="2" width="40" height="54" rx="3" fill="#f6ebd0"/><rect x="45" y="8" width="16" height="3" rx="1.5" fill="#b89c62"/><rect x="45" y="15" width="30" height="2" rx="1" fill="#cbb48a"/><rect x="45" y="20" width="26" height="2" rx="1" fill="#cbb48a"/><g transform="rotate(-12 60 33)"><rect x="47" y="27" width="26" height="10" rx="2" fill="none" stroke="#c0283a" stroke-width="1.8"/><text x="60" y="34.4" font-size="6.5" font-family="Inter,sans-serif" font-weight="800" fill="#c0283a" text-anchor="middle">FINAL</text></g><rect x="6" y="44" width="108" height="54" rx="6" fill="#efe0bd"/><path d="M6 48l54 30 54-30" fill="none" stroke="#7a5a2a" stroke-width="2.5"/><g transform="translate(48 60) scale(0.5)"><use href="#seal" width="48" height="48"/></g></svg>
           <b>Drop Your Cursed Letter Here</b><br><small>Photos of up to 3 pages</small>
           <div class="kinds" aria-label="Letters it can read"><span>Bills</span><span>Fines</span><span>Tax</span><span>Town Council</span><span>Bank</span><span>Court</span><span>Scam Texts</span></div>
         </div>
@@ -57,9 +59,9 @@
       <div>
         <div class="labelrow"><div class="label"><i data-i="skull"></i>Or Try a Cursed Sample</div><button class="link tourlink" id="tourBtn" type="button"><i data-i="eye"></i>30-Second Tour</button></div>
         <div class="samples">
-          <button class="sample" data-sample="power"><span class="ico" style="background:rgba(255,90,105,.15);color:var(--blood)"><i data-i="zap"></i></span><span class="st"><b>Overdue Power Bill</b><small>Electricity · Final reminder</small></span></button>
-          <button class="sample" data-sample="council"><span class="ico" style="background:rgba(245,192,74,.15);color:var(--amber)"><i data-i="building-2"></i></span><span class="st"><b>Town Council Arrears</b><small>HDB estate charges</small></span></button>
-          <button class="sample" data-sample="scam"><span class="ico" style="background:rgba(183,140,255,.15);color:var(--hex)"><i data-i="package"></i></span><span class="st"><b>"Parcel Held" Text</b><small>Suspicious SMS</small></span></button>
+          <button class="sample" data-sample="power"><span class="ico paper"><svg viewBox="0 0 40 48" aria-hidden="true"><rect x="4" y="2" width="32" height="44" rx="3" fill="#efe0bd"/><rect x="8" y="7" width="14" height="3" rx="1.5" fill="#b89c62"/><rect x="8" y="14" width="24" height="2" rx="1" fill="#cbb48a"/><rect x="8" y="19" width="20" height="2" rx="1" fill="#cbb48a"/><rect x="8" y="24" width="22" height="2" rx="1" fill="#cbb48a"/><g transform="rotate(-14 22 35)"><rect x="9" y="30" width="26" height="10" rx="2" fill="#efe0bd" stroke="#c0283a" stroke-width="1.8"/><text x="22" y="37.4" font-size="6.5" font-family="Inter,sans-serif" font-weight="800" fill="#c0283a" text-anchor="middle">FINAL</text></g></svg></span><span class="st"><b>Overdue Power Bill</b><small>Electricity · Final reminder</small></span></button>
+          <button class="sample" data-sample="council"><span class="ico paper"><svg viewBox="0 0 40 48" aria-hidden="true"><rect x="4" y="2" width="32" height="44" rx="3" fill="#efe0bd"/><path d="M7 2h26a3 3 0 0 1 3 3v6H4V5a3 3 0 0 1 3-3z" fill="#d9a43a"/><rect x="8" y="16" width="24" height="2" rx="1" fill="#cbb48a"/><rect x="8" y="21" width="18" height="2" rx="1" fill="#cbb48a"/><rect x="8" y="29" width="24" height="10" rx="2" fill="#fff6dd" stroke="#d9a43a" stroke-width="1.2"/><text x="20" y="36.3" font-size="6" font-family="Inter,sans-serif" font-weight="800" fill="#8a6400" text-anchor="middle">$96.40</text></svg></span><span class="st"><b>Town Council Arrears</b><small>HDB estate charges</small></span></button>
+          <button class="sample" data-sample="scam"><span class="ico paper"><svg viewBox="0 0 40 48" aria-hidden="true"><rect x="9" y="1" width="22" height="46" rx="4" fill="#1a1328" stroke="#6a5c86" stroke-width="1.5"/><rect x="12" y="9" width="16" height="17" rx="3" fill="#3a2b4f"/><rect x="14" y="12" width="12" height="2" rx="1" fill="#bdb3d1"/><rect x="14" y="16" width="9" height="2" rx="1" fill="#bdb3d1"/><rect x="14" y="20" width="11" height="2" rx="1" fill="#b78cff"/><circle cx="29" cy="7" r="5" fill="#ff5a69"/><text x="29" y="9.6" font-size="7.5" font-family="Inter,sans-serif" font-weight="800" fill="#fff" text-anchor="middle">!</text></svg></span><span class="st"><b>"Parcel Held" Text</b><small>Suspicious SMS</small></span></button>
         </div>
       </div>
       <div class="go">
@@ -94,11 +96,13 @@
       <div class="top"><div class="from"><b id="ltype"></b><small id="lsender"></small></div><button class="sec" id="again"><i data-i="rotate-ccw"></i>New Letter</button></div>
       <div class="rbody">
         <div class="pane on" id="pane-verdict" role="tabpanel" aria-label="Verdict">
+          <div id="banner"></div>
           <div class="verdict">
             <div class="reaperbox" id="reaper"></div>
             <div class="bubble"><span class="spiritTag" id="kind"></span><span class="plain" id="plain"></span><span id="summary"></span></div>
           </div>
 
+          <div class="tiles" id="tiles"></div>
           <div class="first" id="first">
             <div class="fl"><i data-i="flame"></i>Do This First</div>
             <p id="firstTxt"></p>
@@ -106,12 +110,9 @@
           </div>
           <div class="actions">
             <button class="sec" id="speak" hidden aria-label="Read the verdict aloud"><i data-i="volume-2"></i><span>Listen</span></button>
-            <button class="sec" id="share" type="button" aria-label="Share with family"><i data-i="users"></i>Share</button>
-            <button class="sec" id="copySum" aria-label="Copy summary"><i data-i="copy"></i>Copy</button>
+            <button class="sec" id="share" type="button" aria-label="Share or copy for family"><i data-i="users"></i><span>Share</span></button>
             <button class="sec" id="wordsBtn" hidden><i data-i="book-open"></i><span>Words</span></button>
           </div>
-          <p class="hidnote" id="hidnote" hidden></p>
-          <div class="tiles" id="tiles"></div>
           <div id="warns" style="display:grid;gap:8px"></div>
         </div>
         <div class="side">
@@ -126,7 +127,8 @@
             <div class="prog"><i data-i="flame"></i><div class="track"><div class="fill" id="fill"></div></div><span id="progTxt"></span></div>
             <ul class="todo" id="todo" role="group" aria-label="Steps to banish this letter"></ul>
             <div class="banished" id="banished"><i data-i="party-popper"></i><span id="banishedTxt"></span><button class="btn sm" id="victoryBtn" type="button"><i data-i="trophy"></i>Share Your Victory</button></div>
-            <div class="row" id="remind"></div>
+            <div id="remind"></div>
+            <button class="replypeek" id="replyPeek" type="button" hidden><span class="label"><i data-i="feather"></i>Your Reply Is Ready</span><span class="rp" id="replyPeekTxt"></span><span class="rpgo">Open Reply<i data-i="arrow-right"></i></span></button>
             <div class="checks" id="checksSum"></div>
           </div>
           <div class="pane" id="pane-reply" role="tabpanel" aria-labelledby="tab-reply">
@@ -227,7 +229,7 @@
   <div class="modal">
     <button class="iconbtn close" data-close aria-label="Close"><i data-i="x"></i></button>
     <h2 id="shareTitle">Share With Family</h2>
-    <p>Choose how to send it. Personal details are hidden for you.</p>
+    <p id="shareIntro">Choose how to send it or copy it. Personal details are hidden for you.</p>
     <div class="shareopts" id="shareOpts"></div>
     <details class="sharepreview"><summary>Preview what they'll get</summary><pre id="sharePreview"></pre></details>
     <p class="note" id="shareNote"></p>

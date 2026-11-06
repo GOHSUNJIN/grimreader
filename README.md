@@ -19,17 +19,19 @@ The people hit hardest are older people, migrant workers and expats reading lett
 
 | Feature | What it means for the reader |
 | --- | --- |
-| **Plain-language verdict** | A one-line headline, a short summary and a spirit that shows urgency: Friendly Ghost, Restless Spirit, Poltergeist or Imposter! |
+| **Plain-language verdict** | A one-line headline, a short summary and a spirit that shows urgency: Friendly Ghost, Restless Spirit, Poltergeist or Imposter! The whole screen glows green, amber, red or purple to match |
+| **Deadline first** | The days left are the biggest thing on the screen, in the urgency colour, with the date underneath |
 | **Do This First** | The next step, always on top, synced with the full checklist |
 | **Where It Says This** | Tap the deadline or amount to see the exact sentence in the letter, so you never have to just trust the AI |
 | **Scary Words, Decoded** | Jargon like "arrears" or "S&CC" explained, with the sentence where it appears |
-| **Scam detection** | Likely scams lead with "Don't pay or click anything" and list why the message looks fake |
+| **Scam detection** | Likely scams open with a banner listing why the message looks fake, and the verdict says "Don't pay or click anything" |
 | **Safety checks** | Every answer passes rule checks before you see it: real dates, sensible urgency, legal and scam flags |
 | **Reply, Ask, Get Help** | An editable reply that never admits fault, follow-up questions in your language and links to free help from real people for serious letters |
-| **Share with family** | WhatsApp, Telegram, email, text or copy, with ID and account numbers hidden automatically |
+| **Share with family** | WhatsApp, Telegram, email, text or copy from one Share button, with ID and account numbers hidden automatically |
 | **Listen** | The verdict read aloud with the best voice on your device, highlighting each sentence |
-| **Reminders** | A Google Calendar reminder for the deadline |
+| **Reminders** | A reminder card beside the checklist adds the deadline to Google Calendar |
 | **Graveyard** | Every letter you've handled as a tombstone, most urgent first, R.I.P. once banished |
+| **Calm Mode** | One tap for bigger text, higher contrast and no moving effects, for older readers or anyone who finds the spooky theme too much |
 | **Built for everyone** | Fits every screen without scrolling, large tap targets, keyboard and screen reader support, reduced-motion support |
 
 ## Why Frankenstein

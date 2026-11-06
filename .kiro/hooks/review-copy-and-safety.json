@@ -1,0 +1,16 @@
+{
+  "version": "v1",
+  "hooks": [
+    {
+      "name": "Review copy, privacy and fit",
+      "description": "When user-facing code changes, check it against the product rules in steering: plain voice, privacy, safety checks and the one-screen layout.",
+      "trigger": "PostFileSave",
+      "matcher": "(app\\.js$|index\\.html$|style\\.css$|api/.*[^/]*\\.js$)",
+      "action": {
+        "type": "agent",
+        "prompt": "Review only the change that was just made against .kiro/steering/product.md and tech.md. Check: (1) any new user-facing text is plain, short, has no em or en dashes and no comma before 'and' or 'or'; (2) letter text and images are never logged or stored on the server; (3) every AI verdict still goes through applyChecks before show(); (4) layout changes keep the no-scroll rule at 360x640 and 1440x900. Reply with a short list of problems and fixes, or 'No issues'."
+      },
+      "enabled": true
+    }
+  ]
+}

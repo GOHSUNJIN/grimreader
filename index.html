@@ -1,27 +1,279 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-  <meta charset="UTF-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>GrimReader</title>
-  <style>
-    * { margin: 0; padding: 0; box-sizing: border-box; }
-    body {
-      background: #0d0d0d;
-      color: #e0e0e0;
-      font-family: 'Segoe UI', sans-serif;
-      display: flex;
-      flex-direction: column;
-      align-items: center;
-      justify-content: center;
-      min-height: 100vh;
-    }
-    h1 { font-size: 3rem; letter-spacing: 0.1em; color: #fff; }
-    p { margin-top: 1rem; color: #888; font-size: 1.1rem; }
-  </style>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Grim Reader</title>
+<link rel="icon" href="logo.svg" type="image/svg+xml">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Creepster&family=IM+Fell+English:ital@0;1&family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="style.css">
 </head>
 <body>
-  <h1>GrimReader</h1>
-  <p>Coming soon.</p>
+<svg width="0" height="0" style="position:absolute" aria-hidden="true"><symbol id="seal" viewBox="0 0 48 48"><path d="M24 5.5l3.2 2.5 4-.7 2 3.5 3.9 1.3.2 4 3 2.7-1.3 3.8 1.3 3.8-3 2.7-.2 4-3.9 1.3-2 3.5-4-.7-3.2 2.5-3.2-2.5-4 .7-2-3.5-3.9-1.3-.2-4-3-2.7 1.3-3.8-1.3-3.8 3-2.7.2-4 3.9-1.3 2-3.5 4 .7z" fill="#b3202f"/><path d="M24 5.5l3.2 2.5 4-.7 2 3.5 3.9 1.3.2 4" fill="none" stroke="#e0505e" stroke-width="1" stroke-linecap="round" opacity=".7"/><circle cx="24" cy="24" r="12" fill="#9a1826"/><circle cx="24" cy="24" r="12" fill="none" stroke="#6e0f1a" stroke-width="1.4"/><path d="M24 15c-4.8 0-8 3.3-8 7.6 0 2.5 1.2 4.1 2.8 5v2.8h10.4v-2.8c1.6-.9 2.8-2.5 2.8-5 0-4.3-3.2-7.6-8-7.6z" fill="#f6dccf"/><ellipse cx="20.9" cy="22.8" rx="2.2" ry="2.4" fill="#6e0f1a"/><ellipse cx="27.1" cy="22.8" rx="2.2" ry="2.4" fill="#6e0f1a"/><path d="M24 25.6l-1.2 2h2.4z" fill="#6e0f1a"/><path d="M21.8 30.4v-2M24 30.4v-2M26.2 30.4v-2" stroke="#6e0f1a" stroke-width="1.1"/></symbol></svg>
+<div class="sky"></div><div class="stars"></div><div class="moon"></div>
+<div class="batlane" aria-hidden="true">
+  <div class="bat" style="top:14%;animation-delay:-3s"><svg viewBox="0 0 64 28"><path d="M32 10c2-4 4-5 4-5s1 3 0 6c6-6 16-8 28-3-8 1-12 6-12 12-4-4-9-4-12 0-1-4-4-5-8-4-4-1-7 0-8 4-3-4-8-4-12 0 0-6-4-11-12-12 12-5 22-3 28 3-1-3 0-6 0-6s2 1 4 5z"/></svg></div>
+  <div class="bat" style="top:34%;width:22px;animation-duration:26s;animation-delay:-14s"><svg viewBox="0 0 64 28"><path d="M32 10c2-4 4-5 4-5s1 3 0 6c6-6 16-8 28-3-8 1-12 6-12 12-4-4-9-4-12 0-1-4-4-5-8-4-4-1-7 0-8 4-3-4-8-4-12 0 0-6-4-11-12-12 12-5 22-3 28 3-1-3 0-6 0-6s2 1 4 5z"/></svg></div>
+</div>
+<div class="fogwrap" aria-hidden="true"><div class="fog"></div><div class="fog two"></div></div>
+<div class="sr" id="live" aria-live="polite"></div>
+
+<main class="app">
+  <div class="head">
+    <div class="brand"><div class="logo"><svg viewBox="0 0 48 48" xmlns="http://www.w3.org/2000/svg" aria-hidden="true"><use href="#seal" width="48" height="48"/></svg></div><h1>Grim Reader</h1></div>
+    <div class="headbtns">
+      <button class="iconbtn" id="yardBtn" title="Your Graveyard" aria-label="Your Graveyard"><i data-i="tomb"></i><span class="lbl">Graveyard</span><span class="badge-dot" id="yardBadge" hidden></span></button>
+      <button class="iconbtn" id="soundBtn" aria-pressed="false" title="Sound Effects" aria-label="Sound effects"><i data-i="volume-x"></i></button>
+      <button class="iconbtn" id="infoBtn" title="About This Project" aria-label="About this project"><i data-i="info"></i><span class="lbl">About</span></button>
+    </div>
+  </div>
+  <p class="tag">Feed us the letter you're too scared to open. The Grim Reader will tell you what it really says.</p>
+  <div class="steps" aria-hidden="true">
+    <div class="step on" id="st1"><i data-i="mail"></i><span>Drop It</span></div><div class="dash"></div>
+    <div class="step" id="st2"><i data-i="wand-sparkles"></i><span>Decode It</span></div><div class="dash"></div>
+    <div class="step" id="st3"><i data-i="flame"></i><span>Banish It</span></div>
+  </div>
+
+  <!-- 1. input -->
+  <section class="screen on" id="input" aria-label="Add your letter">
+    <div class="card" id="inputCard">
+      <div class="drop" id="drop" tabindex="0" role="button" aria-label="Add a photo of your letter">
+        <div class="empty">
+          <svg class="env" width="86" height="64" viewBox="0 0 86 64" aria-hidden="true"><rect x="3" y="8" width="80" height="52" rx="6" fill="#efe0bd"/><path d="M3 12l40 28 40-28" fill="none" stroke="#7a5a2a" stroke-width="2.5"/><g transform="translate(31.0 27.0) scale(0.5)"><use href="#seal" width="48" height="48"/></g></svg>
+          <b>Drop Your Cursed Letter Here</b><br><small>Photos of up to 3 pages</small>
+          <div class="kinds" aria-label="Letters it can read"><span>Bills</span><span>Fines</span><span>Tax</span><span>Town Council</span><span>Bank</span><span>Court</span><span>Scam Texts</span></div>
+        </div>
+        <div class="thumbs" id="thumbs"></div>
+        <div class="ways empty">
+          <span class="sec"><i data-i="camera"></i>Take or Upload a Photo</span>
+          <button class="sec" id="pasteToggle" type="button"><i data-i="clipboard-paste"></i>Paste Text</button>
+        </div>
+        <input type="file" id="file" accept="image/*" multiple hidden>
+      </div>
+      <div class="qwarn" id="qwarn" role="alert"><i data-i="triangle-alert"></i><span id="qwarnTxt"></span><button class="sec" id="retake" type="button">Retake</button><button class="link" id="keep" type="button">Use Anyway</button></div>
+      <div class="pastebar"><div class="label" style="margin:0"><i data-i="clipboard-paste"></i>Paste Your Letter</div><button class="sec" id="backToPhoto" type="button"><i data-i="camera"></i>Use a Photo</button></div>
+      <textarea id="text" placeholder="Paste or type the letter here, exactly as it's written..." aria-label="Letter text"></textarea>
+      <div>
+        <div class="labelrow"><div class="label"><i data-i="skull"></i>Or Try a Cursed Sample</div><button class="link tourlink" id="tourBtn" type="button"><i data-i="eye"></i>30-Second Tour</button></div>
+        <div class="samples">
+          <button class="sample" data-sample="power"><span class="ico" style="background:rgba(255,90,105,.15);color:var(--blood)"><i data-i="zap"></i></span><span class="st"><b>Overdue Power Bill</b><small>Electricity · Final reminder</small></span></button>
+          <button class="sample" data-sample="council"><span class="ico" style="background:rgba(245,192,74,.15);color:var(--amber)"><i data-i="building-2"></i></span><span class="st"><b>Town Council Arrears</b><small>HDB estate charges</small></span></button>
+          <button class="sample" data-sample="scam"><span class="ico" style="background:rgba(183,140,255,.15);color:var(--hex)"><i data-i="package"></i></span><span class="st"><b>"Parcel Held" Text</b><small>Suspicious SMS</small></span></button>
+        </div>
+      </div>
+      <div class="go">
+        <label class="lang"><i data-i="languages"></i>
+          <select id="lang" aria-label="Explain it in">
+            <option>English</option><option>简体中文 (Chinese)</option><option>Bahasa Melayu</option><option>தமிழ் (Tamil)</option><option>Bahasa Indonesia</option><option>Tagalog</option><option>Tiếng Việt</option><option>বাংলা (Bengali)</option><option>မြန်မာ (Burmese)</option>
+          </select>
+        </label>
+        <button class="btn" id="go" disabled><i data-i="wand-sparkles"></i>Summon the Grim Reader</button>
+      </div>
+      <div class="err" id="status" role="status"></div>
+      <div class="yard" id="yard" hidden>
+        <div class="yardhead"><div class="label"><i data-i="tomb"></i>Your Graveyard</div><button class="link" id="clearYard" type="button">Clear All</button></div>
+        <div class="yardrow" id="yardrow"></div>
+      </div>
+      <p class="fine"><i data-i="lock"></i>Photos are only used to read the letter. Nothing is saved. Not legal advice.</p>
+    </div>
+  </section>
+
+  <!-- 2. reading -->
+  <section class="screen" id="seance" aria-label="Reading your letter">
+    <div class="card">
+      <div class="stage"><div class="spirit" id="seanceReaper"></div><svg class="envbody" width="140" height="92" viewBox="0 0 140 92" aria-hidden="true"><rect x="0" y="0" width="140" height="92" rx="8" fill="#e6d3a8"/><path d="M0 92l70-46 70 46" fill="#efe0bd"/><path d="M0 4l70 50L140 4" fill="none" stroke="#b89c62" stroke-width="2"/><g transform="translate(55.0 37.0) scale(0.625)"><use href="#seal" width="48" height="48"/></g></svg></div>
+      <div class="spell" id="spell"></div>
+      <div class="candles"><span class="candle"></span><span class="candle"></span><span class="candle"></span></div>
+    </div>
+  </section>
+
+  <!-- 3. result -->
+  <section class="screen" id="result" aria-label="What your letter says">
+    <div class="card">
+      <div class="top"><div class="from"><b id="ltype"></b><small id="lsender"></small></div><button class="sec" id="again"><i data-i="rotate-ccw"></i>New Letter</button></div>
+      <div class="rbody">
+        <div class="pane on" id="pane-verdict" role="tabpanel" aria-label="Verdict">
+          <div class="verdict">
+            <div class="reaperbox" id="reaper"></div>
+            <div class="bubble"><span class="spiritTag" id="kind"></span><span class="plain" id="plain"></span><span id="summary"></span></div>
+          </div>
+
+          <div class="first" id="first">
+            <div class="fl"><i data-i="flame"></i>Do This First</div>
+            <p id="firstTxt"></p>
+            <div class="row"><span class="due" id="firstDue"></span><button class="btn sm" id="firstDone"><i data-i="check"></i>Mark Done</button></div>
+          </div>
+          <div class="actions">
+            <button class="sec" id="speak" hidden aria-label="Read the verdict aloud"><i data-i="volume-2"></i><span>Listen</span></button>
+            <button class="sec" id="share" type="button" aria-label="Share with family"><i data-i="users"></i>Share</button>
+            <button class="sec" id="copySum" aria-label="Copy summary"><i data-i="copy"></i>Copy</button>
+            <button class="sec" id="wordsBtn" hidden><i data-i="book-open"></i><span>Words</span></button>
+          </div>
+          <p class="hidnote" id="hidnote" hidden></p>
+          <div class="tiles" id="tiles"></div>
+          <div id="warns" style="display:grid;gap:8px"></div>
+        </div>
+        <div class="side">
+          <div class="tabs" role="tablist" id="tabs" aria-label="Letter tools">
+            <button class="tab" role="tab" id="tab-verdict" aria-selected="true" data-pane="verdict"><i data-i="ghost"></i>Verdict</button>
+            <button class="tab" role="tab" id="tab-todo" aria-selected="false" data-pane="todo" tabindex="-1"><i data-i="list-checks"></i>Banish It</button>
+            <button class="tab" role="tab" id="tab-reply" aria-selected="false" data-pane="reply" tabindex="-1"><i data-i="feather"></i>Reply</button>
+            <button class="tab" role="tab" id="tab-ask" aria-selected="false" data-pane="ask" tabindex="-1"><i data-i="message-circle-question"></i>Ask</button>
+            <button class="tab" role="tab" id="tab-help" aria-selected="false" data-pane="help" tabindex="-1"><i data-i="life-buoy"></i>Get Help</button>
+          </div>
+          <div class="pane" id="pane-todo" role="tabpanel" aria-labelledby="tab-todo">
+            <div class="prog"><i data-i="flame"></i><div class="track"><div class="fill" id="fill"></div></div><span id="progTxt"></span></div>
+            <ul class="todo" id="todo" role="group" aria-label="Steps to banish this letter"></ul>
+            <div class="banished" id="banished"><i data-i="party-popper"></i><span id="banishedTxt"></span><button class="btn sm" id="victoryBtn" type="button"><i data-i="trophy"></i>Share Your Victory</button></div>
+            <div class="row" id="remind"></div>
+            <div class="checks" id="checksSum"></div>
+          </div>
+          <div class="pane" id="pane-reply" role="tabpanel" aria-labelledby="tab-reply">
+            <div class="parch" id="reply" contenteditable="true" aria-label="Your reply, editable"></div>
+            <div class="row"><button class="sec" id="copy"><i data-i="copy"></i>Copy Reply</button></div>
+          </div>
+          <div class="pane" id="pane-ask" role="tabpanel" aria-labelledby="tab-ask">
+            <div class="chat" id="chat" aria-live="polite"></div>
+            <div class="suggest" id="suggest">
+              <button class="chip" data-q="What happens if I ignore this?">What If I Ignore It?</button>
+              <button class="chip" data-q="Can I pay in instalments or ask for more time?">Can I Pay Later?</button>
+              <button class="chip" data-q="How can I be sure this letter is real?">Is It Real?</button>
+            </div>
+            <form class="ask" id="askForm"><input id="askInput" placeholder="Ask about this letter..." autocomplete="off" aria-label="Your question"><button id="askBtn" aria-label="Send question"><i data-i="send"></i></button></form>
+            <p class="note" id="askNote"></p>
+          </div>
+          <div class="pane" id="pane-help" role="tabpanel" aria-labelledby="tab-help">
+            <div class="helps">
+              <a class="help" href="https://lab.mlaw.gov.sg/" target="_blank" rel="noopener"><span class="ico"><i data-i="scale"></i></span><div><b>Legal Aid Bureau</b><small>Free legal help if you qualify</small></div><i data-i="external-link"></i></a>
+              <a class="help" href="https://www.cjc.org.sg/" target="_blank" rel="noopener"><span class="ico"><i data-i="landmark"></i></span><div><b>Community Justice Centre</b><small>Help with court letters</small></div><i data-i="external-link"></i></a>
+              <a class="help" href="https://www.ccs.org.sg/" target="_blank" rel="noopener"><span class="ico"><i data-i="hand-coins"></i></span><div><b>Credit Counselling Singapore</b><small>Debts and repayment plans</small></div><i data-i="external-link"></i></a>
+              <a class="help" href="https://www.scamshield.gov.sg/" target="_blank" rel="noopener"><span class="ico"><i data-i="shield-alert"></i></span><div><b>ScamShield</b><small>Check or report a scam</small></div><i data-i="external-link"></i></a>
+              <a class="help" href="https://supportgowhere.life.gov.sg/" target="_blank" rel="noopener"><span class="ico"><i data-i="life-buoy"></i></span><div><b>SupportGoWhere</b><small>Find other support</small></div><i data-i="external-link"></i></a>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+  <p class="foot"><i data-i="flame"></i><span id="tally">Not legal or financial advice.</span></p>
+</main>
+
+<!-- overlays -->
+<div class="overlay" id="about" role="dialog" aria-modal="true" aria-labelledby="aboutTitle">
+  <div class="modal about">
+    <button class="iconbtn close" data-close aria-label="Close"><i data-i="x"></i></button>
+    <span class="badge"><i data-i="trophy"></i><span>Kiroween 2026 · <span id="category"></span></span></span>
+    <div class="abouthero">
+      <div class="aboutlogo"><svg viewBox="0 0 48 48" xmlns="http://www.w3.org/2000/svg" aria-hidden="true"><use href="#seal" width="48" height="48"/></svg></div>
+      <div>
+        <h2 id="aboutTitle">Grim Reader</h2>
+        <p class="aboutline">Scary letters, explained.</p>
+      </div>
+    </div>
+    <p>Snap a scary official letter. Grim Reader tells you what it means, how urgent it is and exactly what to do next, in your language.</p>
+
+    <h3><i data-i="users"></i>Built By</h3>
+    <div class="team" id="team"></div>
+
+    <h3><i data-i="code-xml"></i>Built With</h3>
+    <div class="stack"><span>Claude</span><span>Lucide Icons</span><span class="planned">Kiro (planned)</span><span class="planned">Amazon Bedrock (planned)</span></div>
+
+    <p class="aboutfine"><i data-i="lock"></i>Photos are never stored. Grim Reader explains letters; it is not legal or financial advice.</p>
+    <div class="row" id="links" style="margin-top:12px"><button class="sec" id="replayIntro"><i data-i="eye"></i>Replay Intro</button><button class="btn sm" id="aboutTour"><i data-i="sparkles"></i>Take the Tour</button></div>
+  </div>
+</div>
+
+<div class="overlay intro" id="intro" role="dialog" aria-modal="true" aria-labelledby="introTitle">
+  <div class="modal introcard">
+    <div class="introscene">
+      <div class="introreaper" id="introReaper"></div>
+      <div class="introbubble">
+        <h2 id="introTitle">Got a scary letter?</h2>
+        <p>Hand it to me. I'll tell you what it really says and what to do.</p>
+      </div>
+    </div>
+    <ol class="introsteps">
+      <li><span class="dot"><i data-i="mail"></i></span><b>Drop It</b><small>Photo or text</small></li>
+      <li><span class="dot"><i data-i="wand-sparkles"></i></span><b>Decode It</b><small>Plain words, your language</small></li>
+      <li><span class="dot"><i data-i="flame"></i></span><b>Banish It</b><small>Steps, reply, reminder</small></li>
+    </ol>
+    <button class="btn introgo" data-close>Show Me My Letter<i data-i="arrow-right"></i></button>
+    <button class="link introtour" id="introTour" type="button"><i data-i="eye"></i>Or take the 30-second tour</button>
+  </div>
+</div>
+
+<div class="overlay" id="wordsSheet" role="dialog" aria-modal="true" aria-labelledby="wordsTitle">
+  <div class="modal">
+    <button class="iconbtn close" data-close aria-label="Close"><i data-i="x"></i></button>
+    <h2 id="wordsTitle">Scary Words, Decoded</h2>
+    <p>Tap a word to see what it means and where it is in your letter.</p>
+    <div class="wordchips" id="wordchips" role="tablist" aria-label="Scary words"></div>
+    <div class="worddetail" id="worddetail" aria-live="polite"></div>
+  </div>
+</div>
+
+<div class="overlay" id="yardSheet" role="dialog" aria-modal="true" aria-labelledby="yardTitle">
+  <div class="modal">
+    <button class="iconbtn close" data-close aria-label="Close"><i data-i="x"></i></button>
+    <h2 id="yardTitle">Your Graveyard</h2>
+    <p id="yardIntro">Every letter you've read. The most urgent ones are at the top.</p>
+    <div class="yardlist" id="yardList"></div>
+    <div class="row" style="justify-content:space-between;align-items:center;margin-top:12px"><button class="link" id="clearYard2" type="button">Clear All</button><button class="sec" data-close>Close</button></div>
+  </div>
+</div>
+
+<div class="overlay" id="shareSheet" role="dialog" aria-modal="true" aria-labelledby="shareTitle">
+  <div class="modal">
+    <button class="iconbtn close" data-close aria-label="Close"><i data-i="x"></i></button>
+    <h2 id="shareTitle">Share With Family</h2>
+    <p>Choose how to send it. Personal details are hidden for you.</p>
+    <div class="shareopts" id="shareOpts"></div>
+    <details class="sharepreview"><summary>Preview what they'll get</summary><pre id="sharePreview"></pre></details>
+    <p class="note" id="shareNote"></p>
+  </div>
+</div>
+
+<div class="overlay" id="whereSheet" role="dialog" aria-modal="true" aria-labelledby="whereTitle">
+  <div class="modal">
+    <button class="iconbtn close" data-close aria-label="Close"><i data-i="x"></i></button>
+    <h2 id="whereTitle">Where It Says This</h2>
+    <p id="whereIntro"></p>
+    <div class="worddetail" style="margin-top:12px" id="whereBody"></div>
+    <p class="note" style="color:var(--muted);margin-top:10px">Always check this matches your letter.</p>
+  </div>
+</div>
+
+<div class="overlay" id="victory" role="dialog" aria-modal="true" aria-labelledby="victoryTitle">
+  <div class="modal" style="text-align:center">
+    <button class="iconbtn close" data-close aria-label="Close"><i data-i="x"></i></button>
+    <h2 id="victoryTitle">Share Your Victory</h2>
+    <img id="victoryImg" alt="Letter banished card" class="victoryimg">
+    <div class="row" style="justify-content:center;margin-top:12px"><button class="btn sm" id="saveCard" hidden><i data-i="download"></i>Save Image</button><button class="sec" id="copyCaption"><i data-i="copy"></i>Copy Caption</button></div>
+    <p class="note" id="victoryNote"></p>
+  </div>
+</div>
+
+<div class="tour" id="tour" hidden>
+  <div class="tourring" id="tourRing"></div>
+  <div class="tourtip" id="tourTip" role="dialog" aria-live="polite" aria-labelledby="tourText">
+    <div class="tourstep" id="tourStep"></div>
+    <p id="tourText"></p>
+    <div class="row" style="justify-content:space-between;align-items:center"><button class="link" id="tourSkip" type="button">End Tour</button><span class="row"><button class="sec" id="tourBack" type="button">Back</button><button class="btn sm" id="tourNext" type="button">Next<i data-i="arrow-right"></i></button></span></div>
+  </div>
+</div>
+
+<div class="overlay" id="cropper" role="dialog" aria-modal="true" aria-labelledby="cropTitle">
+  <div class="modal" style="text-align:center">
+    <button class="iconbtn close" data-close aria-label="Cancel crop"><i data-i="x"></i></button>
+    <h2 id="cropTitle">Crop Page</h2>
+    <p>Drag the corners to fit the letter.</p>
+    <div class="cropwrap" id="cropwrap"><img id="cropimg" alt="Page to crop"><div class="cropbox" id="cropbox"><span class="h tl"></span><span class="h tr"></span><span class="h bl"></span><span class="h br"></span></div></div>
+    <div class="row" style="justify-content:center"><button class="sec" data-close>Cancel</button><button class="btn sm" id="cropApply"><i data-i="check"></i>Apply Crop</button></div>
+  </div>
+</div>
+
+
+<script src="app.js"></script>
 </body>
 </html>

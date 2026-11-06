@@ -514,6 +514,13 @@ ul.todo li.done .txt{text-decoration:line-through;color:var(--muted)}
   .actions .sec svg{width:17px;height:17px}
   .tile .t svg{display:none}
 }
+/* very narrow phones: four header buttons need the title a little smaller */
+@media (max-width:380px){
+  h1{font-size:21px}
+  .logo,.logo svg{width:32px;height:32px}
+  .headbtns{gap:4px}
+  .iconbtn{width:34px;height:34px}
+}
 @media (max-width:400px){
   .introreaper,.introreaper svg{width:72px}
   .modal .introbubble h2{font-size:22px}
@@ -615,7 +622,9 @@ body.fit3 .actions .sec{flex-direction:row;padding:5px 2px}
 /* last resort: let the page scroll rather than hide anything */
 html:has(body.fit4),body.fit4{overflow:auto}
 body.fit4 .app{height:auto;min-height:100dvh}
-body.fit4 .screen.on,body.fit4 .card,body.fit4 .rbody,body.fit4 .pane.on{flex:none;min-height:auto}
+body.fit4 .screen.on,body.fit4 .rbody,body.fit4 .pane.on{flex:none;min-height:auto}
+/* the card sits in a row: it keeps filling the width (flex:none here would size it to its longest line) */
+body.fit4 .card{min-height:auto}
 
 /* ===== touch: 44px tap areas without changing the look ===== */
 @media (pointer:coarse){

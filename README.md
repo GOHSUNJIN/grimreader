@@ -13,7 +13,7 @@ Official letters are written in formal or legal language and they are often frig
 The people hit hardest are older people, migrant workers and expats reading letters in an unfamiliar system or language, young adults getting their first bills and caregivers handling letters for a parent. We wanted to turn the scariest thing in the mailbox into a short, calm to-do list.
 
 ## What It Does
-1. **Drop It.** Take a photo of the letter (up to 3 pages) or paste the text.
+1. **Drop It.** Take a photo of the letter, upload a PDF, Word or text file (up to 3 pages), or paste the text.
 2. **Decode It.** The Grim Reader explains it in plain words in one of 9 languages, with a clear headline like "Act within 4 days" and the deadline, amount and scam risk.
 3. **Banish It.** Follow a short checklist, send the ready-made reply, set a reminder. When every step is done the letter is banished.
 

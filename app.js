@@ -128,16 +128,68 @@ $('backToPhoto').onclick = () => { $('inputCard').classList.remove('pasting'); r
 $('pasteToggle').onclick = () => { const on = !$('inputCard').classList.contains('pasting'); $('inputCard').classList.toggle('pasting', on); if (on) $('text').focus(); refit(); };
 $('text').oninput = () => { chosenSample = null; refresh(); };
 
+// ---------- other file types: PDF pages become photos, Word and text files become pasted text ----------
+const loadScript = src => new Promise((res, rej) => { const el = document.createElement('script'); el.src = src; el.onload = res; el.onerror = rej; document.head.appendChild(el); });
+const PDFJS = 'https://cdnjs.cloudflare.com/ajax/libs/pdf.js/3.11.174/';
+async function pdfToImages(f, max){
+  if (!window.pdfjsLib) { await loadScript(PDFJS + 'pdf.min.js'); pdfjsLib.GlobalWorkerOptions.workerSrc = PDFJS + 'pdf.worker.min.js'; }
+  const pdf = await pdfjsLib.getDocument({ data: await f.arrayBuffer() }).promise, out = [];
+  for (let n = 1; n <= Math.min(pdf.numPages, max); n++) {
+    const page = await pdf.getPage(n), base = page.getViewport({ scale: 1 });
+    const vp = page.getViewport({ scale: Math.min(3, 1600 / Math.max(base.width, base.height)) });
+    const c = document.createElement('canvas'); c.width = vp.width; c.height = vp.height;
+    const g = c.getContext('2d'); g.fillStyle = '#fff'; g.fillRect(0, 0, c.width, c.height);
+    await page.render({ canvasContext: g, viewport: vp }).promise;
+    out.push(await new Promise(r => c.toBlob(r, 'image/jpeg', .9)));
+  }
+  return out;
+}
+async function docxToText(f){
+  if (!window.mammoth) await loadScript('https://cdnjs.cloudflare.com/ajax/libs/mammoth/1.6.0/mammoth.browser.min.js');
+  return (await mammoth.extractRawText({ arrayBuffer: await f.arrayBuffer() })).value;
+}
+const kindOf = f => {
+  const n = f.name.toLowerCase();
+  if (/\.(heic|heif)$/.test(n) || /hei[cf]/.test(f.type)) return 'heic';
+  if (f.type.startsWith('image/')) return 'image';
+  if (f.type === 'application/pdf' || n.endsWith('.pdf')) return 'pdf';
+  if (n.endsWith('.docx')) return 'docx';
+  if (f.type.startsWith('text/') || /\.(txt|text|md|eml|csv)$/.test(n)) return 'text';
+  return 'other';
+};
+
 async function addFiles(files){
-  files = files.filter(f => f.type.startsWith('image/'));
-  if (!files.length) { $('status').textContent = 'That isn’t a photo. Try a JPG or PNG.'; return; }
-  $('status').textContent = '';
+  if (!files.length) return;
+  $('status').textContent = 'Opening your file…';
+  const images = [], texts = [], problems = [];
   for (const f of files) {
-    const blob = await toJpeg(f);
+    const kind = kindOf(f);
+    try {
+      if (kind === 'image' || kind === 'heic') images.push(f);
+      else if (kind === 'pdf') images.push(...await pdfToImages(f, 3 - images.length - (replaceIdx >= 0 ? 0 : pages.length)));
+      else if (kind === 'docx') texts.push(await docxToText(f));
+      else if (kind === 'text') texts.push(await f.text());
+      else problems.push(`${f.name} can't be read. Try a photo, PDF, Word (.docx) or text file.`);
+    } catch { problems.push(`We couldn't open ${f.name}. Try a photo or screenshot of it instead.`); }
+  }
+  // Word and text files go straight into the paste box
+  const text = texts.map(t => t.trim()).filter(Boolean).join('\n\n');
+  if (text && !images.length) {
+    pages.forEach(p => URL.revokeObjectURL(p.url)); pages = []; renderThumbs(); showQuality();
+    chosenSample = null; $('text').value = text; $('inputCard').classList.add('pasting');
+    $('status').textContent = problems.join(' '); refresh(); sfx('tick'); refit(); return;
+  }
+  for (const f of images) {
+    let blob;
+    try { blob = await toJpeg(f); }
+    catch { problems.push(kindOf(f) === 'heic' ? 'This browser can’t open iPhone HEIC photos. Take a screenshot of the letter and add that instead.' : `We couldn't open ${f.name || 'that page'}.`); continue; }
     const page = { blob, url: URL.createObjectURL(blob) };
     if (replaceIdx >= 0) { URL.revokeObjectURL(pages[replaceIdx].url); pages[replaceIdx] = page; await checkQuality(replaceIdx); replaceIdx = -1; }
     else if (pages.length < 3) { pages.push(page); await checkQuality(pages.length - 1); }
+    else { problems.push('Only the first 3 pages were added.'); break; }
   }
+  $('status').textContent = problems.join(' ');
+  if (!images.length) return;
   chosenSample = null; $('text').value = ''; $('inputCard').classList.remove('pasting');
   renderThumbs(); refresh(); sfx('tick'); refit();
 }
@@ -746,7 +798,14 @@ function overflowing(){
   const card = document.querySelector('.screen.on .card'); if (!card) return false;
   if (card.getBoundingClientRect().bottom > window.innerHeight + 2) return true;
   const zones = [card, ...card.querySelectorAll('.pane.on, .drop, .side, .rbody')];
-  return zones.some(z => z.offsetParent && z.scrollHeight > z.clientHeight + 2);
+  // Compare real child boxes with each zone's inner bottom. scrollHeight would also count the
+  // invisible touch tap areas (::after with a negative inset) and push every phone to the last level.
+  const kids = el => [...el.children].flatMap(c => getComputedStyle(c).display === 'contents' ? kids(c) : [c]);
+  return zones.some(z => {
+    if (!z.offsetParent) return false;
+    const cs = getComputedStyle(z), limit = z.getBoundingClientRect().bottom - parseFloat(cs.borderBottomWidth) - parseFloat(cs.paddingBottom) + 2;
+    return kids(z).some(c => c.offsetParent && c.getBoundingClientRect().bottom > limit);
+  });
 }
 function fit(){
   const b = document.body; b.classList.remove('fit1', 'fit2', 'fit3', 'fit4');

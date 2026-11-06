@@ -39,19 +39,19 @@
   <!-- 1. input -->
   <section class="screen on" id="input" aria-label="Add your letter">
     <div class="card" id="inputCard">
-      <div class="drop" id="drop" tabindex="0" role="button" aria-label="Add a photo of your letter">
+      <div class="drop" id="drop" tabindex="0" role="button" aria-label="Add a photo or file of your letter">
         <div class="empty">
           <svg class="env" width="86" height="64" viewBox="0 0 86 64" aria-hidden="true"><rect x="3" y="8" width="80" height="52" rx="6" fill="#efe0bd"/><path d="M3 12l40 28 40-28" fill="none" stroke="#7a5a2a" stroke-width="2.5"/><g transform="translate(31.0 27.0) scale(0.5)"><use href="#seal" width="48" height="48"/></g></svg>
           <svg class="envstack" width="176" height="146" viewBox="0 0 120 100" aria-hidden="true"><g transform="rotate(-13 36 34)"><rect x="16" y="8" width="40" height="52" rx="3" fill="#e2cfa3"/><path d="M19 8h34a3 3 0 0 1 3 3v6H16v-6a3 3 0 0 1 3-3z" fill="#d9a43a"/><rect x="21" y="23" width="28" height="2" rx="1" fill="#c4ab7d"/><rect x="21" y="28" width="22" height="2" rx="1" fill="#c4ab7d"/></g><g transform="rotate(12 84 34)"><rect x="64" y="8" width="40" height="52" rx="3" fill="#e2cfa3"/><rect x="69" y="14" width="18" height="3" rx="1.5" fill="#b89c62"/><rect x="69" y="21" width="28" height="2" rx="1" fill="#c4ab7d"/><rect x="69" y="26" width="24" height="2" rx="1" fill="#c4ab7d"/></g><rect x="40" y="2" width="40" height="54" rx="3" fill="#f6ebd0"/><rect x="45" y="8" width="16" height="3" rx="1.5" fill="#b89c62"/><rect x="45" y="15" width="30" height="2" rx="1" fill="#cbb48a"/><rect x="45" y="20" width="26" height="2" rx="1" fill="#cbb48a"/><g transform="rotate(-12 60 33)"><rect x="47" y="27" width="26" height="10" rx="2" fill="none" stroke="#c0283a" stroke-width="1.8"/><text x="60" y="34.4" font-size="6.5" font-family="Inter,sans-serif" font-weight="800" fill="#c0283a" text-anchor="middle">FINAL</text></g><rect x="6" y="44" width="108" height="54" rx="6" fill="#efe0bd"/><path d="M6 48l54 30 54-30" fill="none" stroke="#7a5a2a" stroke-width="2.5"/><g transform="translate(48 60) scale(0.5)"><use href="#seal" width="48" height="48"/></g></svg>
-          <b>Drop Your Cursed Letter Here</b><br><small>Photos of up to 3 pages</small>
+          <b>Drop Your Cursed Letter Here</b><br><small>Photo, PDF, Word or text file · up to 3 pages</small>
           <div class="kinds" aria-label="Letters it can read"><span>Bills</span><span>Fines</span><span>Tax</span><span>Town Council</span><span>Bank</span><span>Court</span><span>Scam Texts</span></div>
         </div>
         <div class="thumbs" id="thumbs"></div>
         <div class="ways empty">
-          <span class="sec"><i data-i="camera"></i>Take or Upload a Photo</span>
+          <span class="sec"><i data-i="camera"></i>Take a Photo or Upload a File</span>
           <button class="sec" id="pasteToggle" type="button"><i data-i="clipboard-paste"></i>Paste Text</button>
         </div>
-        <input type="file" id="file" accept="image/*" multiple hidden>
+        <input type="file" id="file" accept="image/*,.heic,.heif,application/pdf,.pdf,.docx,text/plain,.txt" multiple hidden>
       </div>
       <div class="qwarn" id="qwarn" role="alert"><i data-i="triangle-alert"></i><span id="qwarnTxt"></span><button class="sec" id="retake" type="button">Retake</button><button class="link" id="keep" type="button">Use Anyway</button></div>
       <div class="pastebar"><div class="label" style="margin:0"><i data-i="clipboard-paste"></i>Paste Your Letter</div><button class="sec" id="backToPhoto" type="button"><i data-i="camera"></i>Use a Photo</button></div>
@@ -77,7 +77,7 @@
         <div class="yardhead"><div class="label"><i data-i="tomb"></i>Your Graveyard</div><button class="link" id="clearYard" type="button">Clear All</button></div>
         <div class="yardrow" id="yardrow"></div>
       </div>
-      <p class="fine"><i data-i="lock"></i>Photos are only used to read the letter. Nothing is saved. Not legal advice.</p>
+      <p class="fine"><i data-i="lock"></i>Your letter is only used to read it. Nothing is saved. Not legal advice.</p>
     </div>
   </section>
 

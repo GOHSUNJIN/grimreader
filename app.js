@@ -378,7 +378,7 @@ function renderYard(){
     else if (d.deadline) { const days = Math.round((new Date(d.deadline+'T00:00:00') - today) / 864e5); dl = `<span class="dl" style="color:${days <= 7 ? 'var(--blood)' : 'var(--amber)'}">${days < 0 ? 'Overdue' : days === 0 ? 'Today' : days + 'd left'}</span>`; }
     else dl = `<span class="dl" style="color:var(--muted)">${d.scam_risk === 'high' ? 'Scam' : 'No date'}</span>`;
     const haunt = !dead && dleft(it) !== null && dleft(it) <= 3;
-    return `<button class="stone ${dead ? 'dead' : ''} ${haunt ? 'haunt' : ''}" data-id="${it.id}" aria-label="${esc(d.letter_type)}, ${dead ? 'banished' : haunt ? 'due very soon' : 'open'}"><div class="tomb"><span class="rip">${dead ? 'R.I.P.' : haunt ? 'Haunting' : 'Boo'}</span><span class="nm">${esc(d.letter_type || 'Letter')}</span>${dl}</div></button>`;
+    return `<button class="stone ${dead ? 'dead' : ''} ${haunt ? 'haunt' : ''}" data-id="${it.id}" title="${esc(d.letter_type || 'Letter')}" aria-label="${esc(d.letter_type)}, ${dead ? 'banished' : haunt ? 'due very soon' : 'open'}"><div class="tomb"><span class="rip">${dead ? 'R.I.P.' : haunt ? 'Haunting' : 'Boo'}</span><span class="nm">${esc(d.letter_type || 'Letter')}</span>${dl}</div></button>`;
   }).join('');
   $('yardrow').querySelectorAll('.stone').forEach(b => b.onclick = () => { const it = yard.find(x => x.id === b.dataset.id); if (it) { current = it.ctx || null; shownAt = 0; show(it.d, false, it); } });
 }
@@ -612,8 +612,8 @@ async function show(d, fresh, item){
   const tileTag = (w, kind) => w ? `button class="tile" type="button" data-where="${kind}" aria-label="Show where the letter says the ${kind}"` : 'div class="tile"';
   const tileEnd = w => w ? 'button' : 'div';
   $('tiles').innerHTML = [
-    `<${tileTag(dlWhere,'deadline')}><span class="t">${ic('hourglass')}Deadline</span>${dlWhere ? `<span class="where">${ic('eye')}Where?</span>` : ''}<b>${d.deadline ? (d.days < 0 ? 'Passed' : d.days === 0 ? 'Today' : d.days + ' Day' + (d.days === 1 ? '' : 's')) : 'None'}</b><small>${d.deadline ? esc(fmtDate(d.deadline)) : ''}</small></${tileEnd(dlWhere)}>`,
-    `<${tileTag(amWhere,'amount')}><span class="t">${ic('coins')}Amount</span>${amWhere ? `<span class="where">${ic('eye')}Where?</span>` : ''}<b>${d.amount ? esc(String(d.amount).replace(/\s*\(.*\)/,'')) : 'None'}</b>${scam ? '<small>Do not pay</small>' : ''}</${tileEnd(amWhere)}>`,
+    `<${tileTag(dlWhere,'deadline')}><span class="t">${ic('hourglass')}Deadline</span><b>${d.deadline ? (d.days < 0 ? 'Passed' : d.days === 0 ? 'Today' : d.days + ' Day' + (d.days === 1 ? '' : 's')) : 'None'}</b><small>${d.deadline ? esc(fmtDate(d.deadline)) : ''}</small>${dlWhere ? `<span class="where">${ic('eye')}Where?</span>` : ''}</${tileEnd(dlWhere)}>`,
+    `<${tileTag(amWhere,'amount')}><span class="t">${ic('coins')}Amount</span><b>${d.amount ? esc(String(d.amount).replace(/\s*\(.*\)/,'')) : 'None'}</b>${scam ? '<small>Do not pay</small>' : ''}${amWhere ? `<span class="where">${ic('eye')}Where?</span>` : ''}</${tileEnd(amWhere)}>`,
     `<div class="tile"><span class="t">${ic(risk[2])}Scam Risk</span><b style="color:${risk[3]}">${risk[0]}</b></div>`].join('');
 
   $('tiles').querySelectorAll('[data-where]').forEach(b => b.onclick = () => {

@@ -10,9 +10,6 @@ const PROJECT = {
 };
 // ==========================================
 
-const ICONS = {"mail": "<rect width=\"20\" height=\"16\" x=\"2\" y=\"4\" rx=\"2\" /> <path d=\"m22 7-8.97 5.7a1.94 1.94 0 0 1-2.06 0L2 7\" />", "mail-open": "<path d=\"M21.2 8.4c.5.38.8.97.8 1.6v10a2 2 0 0 1-2 2H4a2 2 0 0 1-2-2V10a2 2 0 0 1 .8-1.6l8-6a2 2 0 0 1 2.4 0l8 6Z\" /> <path d=\"m22 10-8.97 5.7a1.94 1.94 0 0 1-2.06 0L2 10\" />", "camera": "<path d=\"M14.5 4h-5L7 7H4a2 2 0 0 0-2 2v9a2 2 0 0 0 2 2h16a2 2 0 0 0 2-2V9a2 2 0 0 0-2-2h-3l-2.5-3z\" /> <circle cx=\"12\" cy=\"13\" r=\"3\" />", "clipboard-paste": "<path d=\"M15 2H9a1 1 0 0 0-1 1v2c0 .6.4 1 1 1h6c.6 0 1-.4 1-1V3c0-.6-.4-1-1-1Z\" /> <path d=\"M8 4H6a2 2 0 0 0-2 2v14a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2M16 4h2a2 2 0 0 1 2 2v2M11 14h10\" /> <path d=\"m17 10 4 4-4 4\" />", "zap": "<path d=\"M4 14a1 1 0 0 1-.78-1.63l9.9-10.2a.5.5 0 0 1 .86.46l-1.92 6.02A1 1 0 0 0 13 10h7a1 1 0 0 1 .78 1.63l-9.9 10.2a.5.5 0 0 1-.86-.46l1.92-6.02A1 1 0 0 0 11 14z\" />", "building-2": "<path d=\"M6 22V4a2 2 0 0 1 2-2h8a2 2 0 0 1 2 2v18Z\" /> <path d=\"M6 12H4a2 2 0 0 0-2 2v6a2 2 0 0 0 2 2h2\" /> <path d=\"M18 9h2a2 2 0 0 1 2 2v9a2 2 0 0 1-2 2h-2\" /> <path d=\"M10 6h4\" /> <path d=\"M10 10h4\" /> <path d=\"M10 14h4\" /> <path d=\"M10 18h4\" />", "package": "<path d=\"M11 21.73a2 2 0 0 0 2 0l7-4A2 2 0 0 0 21 16V8a2 2 0 0 0-1-1.73l-7-4a2 2 0 0 0-2 0l-7 4A2 2 0 0 0 3 8v8a2 2 0 0 0 1 1.73z\" /> <path d=\"M12 22V12\" /> <path d=\"m3.3 7 7.703 4.734a2 2 0 0 0 1.994 0L20.7 7\" /> <path d=\"m7.5 4.27 9 5.15\" />", "languages": "<path d=\"m5 8 6 6\" /> <path d=\"m4 14 6-6 2-3\" /> <path d=\"M2 5h12\" /> <path d=\"M7 2h1\" /> <path d=\"m22 22-5-10-5 10\" /> <path d=\"M14 18h6\" />", "ghost": "<path d=\"M9 10h.01\" /> <path d=\"M15 10h.01\" /> <path d=\"M12 2a8 8 0 0 0-8 8v12l3-3 2.5 2.5L12 19l2.5 2.5L17 19l3 3V10a8 8 0 0 0-8-8z\" />", "skull": "<path d=\"m12.5 17-.5-1-.5 1h1z\" /> <path d=\"M15 22a1 1 0 0 0 1-1v-1a2 2 0 0 0 1.56-3.25 8 8 0 1 0-11.12 0A2 2 0 0 0 8 20v1a1 1 0 0 0 1 1z\" /> <circle cx=\"15\" cy=\"12\" r=\"1\" /> <circle cx=\"9\" cy=\"12\" r=\"1\" />", "hourglass": "<path d=\"M5 22h14\" /> <path d=\"M5 2h14\" /> <path d=\"M17 22v-4.172a2 2 0 0 0-.586-1.414L12 12l-4.414 4.414A2 2 0 0 0 7 17.828V22\" /> <path d=\"M7 2v4.172a2 2 0 0 0 .586 1.414L12 12l4.414-4.414A2 2 0 0 0 17 6.172V2\" />", "coins": "<circle cx=\"8\" cy=\"8\" r=\"6\" /> <path d=\"M18.09 10.37A6 6 0 1 1 10.34 18\" /> <path d=\"M7 6h1v4\" /> <path d=\"m16.71 13.88.7.71-2.82 2.82\" />", "feather": "<path d=\"M12.67 19a2 2 0 0 0 1.416-.588l6.154-6.172a6 6 0 0 0-8.49-8.49L5.586 9.914A2 2 0 0 0 5 11.328V18a1 1 0 0 0 1 1z\" /> <path d=\"M16 8 2 22\" /> <path d=\"M17.5 15H9\" />", "life-buoy": "<circle cx=\"12\" cy=\"12\" r=\"10\" /> <path d=\"m4.93 4.93 4.24 4.24\" /> <path d=\"m14.83 9.17 4.24-4.24\" /> <path d=\"m14.83 14.83 4.24 4.24\" /> <path d=\"m9.17 14.83-4.24 4.24\" /> <circle cx=\"12\" cy=\"12\" r=\"4\" />", "list-checks": "<path d=\"m3 17 2 2 4-4\" /> <path d=\"m3 7 2 2 4-4\" /> <path d=\"M13 6h8\" /> <path d=\"M13 12h8\" /> <path d=\"M13 18h8\" />", "calendar-plus": "<path d=\"M8 2v4\" /> <path d=\"M16 2v4\" /> <path d=\"M21 13V6a2 2 0 0 0-2-2H5a2 2 0 0 0-2 2v14a2 2 0 0 0 2 2h8\" /> <path d=\"M3 10h18\" /> <path d=\"M16 19h6\" /> <path d=\"M19 16v6\" />", "copy": "<rect width=\"14\" height=\"14\" x=\"8\" y=\"8\" rx=\"2\" ry=\"2\" /> <path d=\"M4 16c-1.1 0-2-.9-2-2V4c0-1.1.9-2 2-2h10c1.1 0 2 .9 2 2\" />", "rotate-ccw": "<path d=\"M3 12a9 9 0 1 0 9-9 9.75 9.75 0 0 0-6.74 2.74L3 8\" /> <path d=\"M3 3v5h5\" />", "shield-alert": "<path d=\"M20 13c0 5-3.5 7.5-7.66 8.95a1 1 0 0 1-.67-.01C7.5 20.5 4 18 4 13V6a1 1 0 0 1 1-1c2 0 4.5-1.2 6.24-2.72a1.17 1.17 0 0 1 1.52 0C14.51 3.81 17 5 19 5a1 1 0 0 1 1 1z\" /> <path d=\"M12 8v4\" /> <path d=\"M12 16h.01\" />", "scale": "<path d=\"m16 16 3-8 3 8c-.87.65-1.92 1-3 1s-2.13-.35-3-1Z\" /> <path d=\"m2 16 3-8 3 8c-.87.65-1.92 1-3 1s-2.13-.35-3-1Z\" /> <path d=\"M7 21h10\" /> <path d=\"M12 3v18\" /> <path d=\"M3 7h2c2 0 5-1 7-2 2 1 5 2 7 2h2\" />", "lock": "<rect width=\"18\" height=\"11\" x=\"3\" y=\"11\" rx=\"2\" ry=\"2\" /> <path d=\"M7 11V7a5 5 0 0 1 10 0v4\" />", "check": "<path d=\"M20 6 9 17l-5-5\" />", "sparkles": "<path d=\"M9.937 15.5A2 2 0 0 0 8.5 14.063l-6.135-1.582a.5.5 0 0 1 0-.962L8.5 9.936A2 2 0 0 0 9.937 8.5l1.582-6.135a.5.5 0 0 1 .963 0L14.063 8.5A2 2 0 0 0 15.5 9.937l6.135 1.581a.5.5 0 0 1 0 .964L15.5 14.063a2 2 0 0 0-1.437 1.437l-1.582 6.135a.5.5 0 0 1-.963 0z\" /> <path d=\"M20 3v4\" /> <path d=\"M22 5h-4\" /> <path d=\"M4 17v2\" /> <path d=\"M5 18H3\" />", "flame": "<path d=\"M8.5 14.5A2.5 2.5 0 0 0 11 12c0-1.38-.5-2-1-3-1.072-2.143-.224-4.054 2-6 .5 2.5 2 4.9 4 6.5 2 1.6 3 3.5 3 5.5a7 7 0 1 1-14 0c0-1.153.433-2.294 1-3a2.5 2.5 0 0 0 2.5 2.5z\" />", "send": "<path d=\"M14.536 21.686a.5.5 0 0 0 .937-.024l6.5-19a.496.496 0 0 0-.635-.635l-19 6.5a.5.5 0 0 0-.024.937l7.93 3.18a2 2 0 0 1 1.112 1.11z\" /> <path d=\"m21.854 2.147-10.94 10.939\" />", "wand-sparkles": "<path d=\"m21.64 3.64-1.28-1.28a1.21 1.21 0 0 0-1.72 0L2.36 18.64a1.21 1.21 0 0 0 0 1.72l1.28 1.28a1.2 1.2 0 0 0 1.72 0L21.64 5.36a1.2 1.2 0 0 0 0-1.72\" /> <path d=\"m14 7 3 3\" /> <path d=\"M5 6v4\" /> <path d=\"M19 14v4\" /> <path d=\"M10 2v2\" /> <path d=\"M7 8H3\" /> <path d=\"M21 16h-4\" /> <path d=\"M11 3H9\" />", "scroll-text": "<path d=\"M15 12h-5\" /> <path d=\"M15 8h-5\" /> <path d=\"M19 17V5a2 2 0 0 0-2-2H4\" /> <path d=\"M8 21h12a2 2 0 0 0 2-2v-1a1 1 0 0 0-1-1H11a1 1 0 0 0-1 1v1a2 2 0 1 1-4 0V5a2 2 0 1 0-4 0v2a1 1 0 0 0 1 1h3\" />", "landmark": "<line x1=\"3\" x2=\"21\" y1=\"22\" y2=\"22\" /> <line x1=\"6\" x2=\"6\" y1=\"18\" y2=\"11\" /> <line x1=\"10\" x2=\"10\" y1=\"18\" y2=\"11\" /> <line x1=\"14\" x2=\"14\" y1=\"18\" y2=\"11\" /> <line x1=\"18\" x2=\"18\" y1=\"18\" y2=\"11\" /> <polygon points=\"12 2 20 7 4 7\" />", "hand-coins": "<path d=\"M11 15h2a2 2 0 1 0 0-4h-3c-.6 0-1.1.2-1.4.6L3 17\" /> <path d=\"m7 21 1.6-1.4c.3-.4.8-.6 1.4-.6h4c1.1 0 2.1-.4 2.8-1.2l4.6-4.4a2 2 0 0 0-2.75-2.91l-4.2 3.9\" /> <path d=\"m2 16 6 6\" /> <circle cx=\"16\" cy=\"9\" r=\"2.9\" /> <circle cx=\"6\" cy=\"5\" r=\"3\" />", "party-popper": "<path d=\"M5.8 11.3 2 22l10.7-3.79\" /> <path d=\"M4 3h.01\" /> <path d=\"M22 8h.01\" /> <path d=\"M15 2h.01\" /> <path d=\"M22 20h.01\" /> <path d=\"m22 2-2.24.75a2.9 2.9 0 0 0-1.96 3.12c.1.86-.57 1.63-1.45 1.63h-.38c-.86 0-1.6.6-1.76 1.44L14 10\" /> <path d=\"m22 13-.82-.33c-.86-.34-1.82.2-1.98 1.11c-.11.7-.72 1.22-1.43 1.22H17\" /> <path d=\"m11 2 .33.82c.34.86-.2 1.82-1.11 1.98C9.52 4.9 9 5.52 9 6.23V7\" /> <path d=\"M11 13c1.93 1.93 2.83 4.17 2 5-.83.83-3.07-.07-5-2-1.93-1.93-2.83-4.17-2-5 .83-.83 3.07.07 5 2Z\" />", "external-link": "<path d=\"M15 3h6v6\" /> <path d=\"M10 14 21 3\" /> <path d=\"M18 13v6a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V8a2 2 0 0 1 2-2h6\" />", "file-text": "<path d=\"M15 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V7Z\" /> <path d=\"M14 2v4a2 2 0 0 0 2 2h4\" /> <path d=\"M10 9H8\" /> <path d=\"M16 13H8\" /> <path d=\"M16 17H8\" />", "scan-text": "<path d=\"M3 7V5a2 2 0 0 1 2-2h2\" /> <path d=\"M17 3h2a2 2 0 0 1 2 2v2\" /> <path d=\"M21 17v2a2 2 0 0 1-2 2h-2\" /> <path d=\"M7 21H5a2 2 0 0 1-2-2v-2\" /> <path d=\"M7 8h8\" /> <path d=\"M7 12h10\" /> <path d=\"M7 16h6\" />", "volume-2": "<path d=\"M11 4.702a.705.705 0 0 0-1.203-.498L6.413 7.587A1.4 1.4 0 0 1 5.416 8H3a1 1 0 0 0-1 1v6a1 1 0 0 0 1 1h2.416a1.4 1.4 0 0 1 .997.413l3.383 3.384A.705.705 0 0 0 11 19.298z\" /> <path d=\"M16 9a5 5 0 0 1 0 6\" /> <path d=\"M19.364 18.364a9 9 0 0 0 0-12.728\" />", "square": "<rect width=\"18\" height=\"18\" x=\"3\" y=\"3\" rx=\"2\" />", "message-circle-question": "<path d=\"M7.9 20A9 9 0 1 0 4 16.1L2 22Z\" /> <path d=\"M9.09 9a3 3 0 0 1 5.83 1c0 2-3 3-3 3\" /> <path d=\"M12 17h.01\" />", "users": "<path d=\"M16 21v-2a4 4 0 0 0-4-4H6a4 4 0 0 0-4 4v2\" /> <circle cx=\"9\" cy=\"7\" r=\"4\" /> <path d=\"M22 21v-2a4 4 0 0 0-3-3.87\" /> <path d=\"M16 3.13a4 4 0 0 1 0 7.75\" />", "info": "<circle cx=\"12\" cy=\"12\" r=\"10\" /> <path d=\"M12 16v-4\" /> <path d=\"M12 8h.01\" />", "x": "<path d=\"M18 6 6 18\" /> <path d=\"m6 6 12 12\" />", "radar": "<path d=\"M19.07 4.93A10 10 0 0 0 6.99 3.34\" /> <path d=\"M4 6h.01\" /> <path d=\"M2.29 9.62A10 10 0 1 0 21.31 8.35\" /> <path d=\"M16.24 7.76A6 6 0 1 0 8.23 16.67\" /> <path d=\"M12 18h.01\" /> <path d=\"M17.99 11.66A6 6 0 0 1 15.77 16.67\" /> <circle cx=\"12\" cy=\"12\" r=\"2\" /> <path d=\"m13.41 10.59 5.66-5.66\" />", "book-open": "<path d=\"M12 7v14\" /> <path d=\"M3 18a1 1 0 0 1-1-1V4a1 1 0 0 1 1-1h5a4 4 0 0 1 4 4 4 4 0 0 1 4-4h5a1 1 0 0 1 1 1v13a1 1 0 0 1-1 1h-6a3 3 0 0 0-3 3 3 3 0 0 0-3-3z\" />", "sun": "<circle cx=\"12\" cy=\"12\" r=\"4\" /> <path d=\"M12 2v2\" /> <path d=\"M12 20v2\" /> <path d=\"m4.93 4.93 1.41 1.41\" /> <path d=\"m17.66 17.66 1.41 1.41\" /> <path d=\"M2 12h2\" /> <path d=\"M20 12h2\" /> <path d=\"m6.34 17.66-1.41 1.41\" /> <path d=\"m19.07 4.93-1.41 1.41\" />", "moon": "<path d=\"M12 3a6 6 0 0 0 9 9 9 9 0 1 1-9-9Z\" />", "trash-2": "<path d=\"M3 6h18\" /> <path d=\"M19 6v14c0 1-1 2-2 2H7c-1 0-2-1-2-2V6\" /> <path d=\"M8 6V4c0-1 1-2 2-2h4c1 0 2 1 2 2v2\" /> <line x1=\"10\" x2=\"10\" y1=\"11\" y2=\"17\" /> <line x1=\"14\" x2=\"14\" y1=\"11\" y2=\"17\" />", "github": "<path d=\"M15 22v-4a4.8 4.8 0 0 0-1-3.5c3 0 6-2 6-5.5.08-1.25-.27-2.48-1-3.5.28-1.15.28-2.35 0-3.5 0 0-1 0-3 1.5-2.64-.5-5.36-.5-8 0C6 2 5 2 5 2c-.3 1.15-.3 2.35 0 3.5A5.403 5.403 0 0 0 4 9c0 3.5 3 5.5 6 5.5-.39.49-.68 1.05-.85 1.65-.17.6-.22 1.23-.15 1.85v4\" /> <path d=\"M9 18c-4.51 2-5-2-7-2\" />", "heart": "<path d=\"M19 14c1.49-1.46 3-3.21 3-5.5A5.5 5.5 0 0 0 16.5 3c-1.76 0-3 .5-4.5 2-1.5-1.5-2.74-2-4.5-2A5.5 5.5 0 0 0 2 8.5c0 2.3 1.5 4.05 3 5.5l7 7Z\" />", "code-xml": "<path d=\"m18 16 4-4-4-4\" /> <path d=\"m6 8-4 4 4 4\" /> <path d=\"m14.5 4-5 16\" />", "trophy": "<path d=\"M6 9H4.5a2.5 2.5 0 0 1 0-5H6\" /> <path d=\"M18 9h1.5a2.5 2.5 0 0 0 0-5H18\" /> <path d=\"M4 22h16\" /> <path d=\"M10 14.66V17c0 .55-.47.98-.97 1.21C7.85 18.75 7 20.24 7 22\" /> <path d=\"M14 14.66V17c0 .55.47.98.97 1.21C16.15 18.75 17 20.24 17 22\" /> <path d=\"M18 2H6v7a6 6 0 0 0 12 0V2Z\" />", "user": "<path d=\"M19 21v-2a4 4 0 0 0-4-4H9a4 4 0 0 0-4 4v2\" /> <circle cx=\"12\" cy=\"7\" r=\"4\" />", "a-large-small": "<path d=\"M21 14h-5\" /> <path d=\"M16 16v-3.5a2.5 2.5 0 0 1 5 0V16\" /> <path d=\"M4.5 13h6\" /> <path d=\"m3 16 4.5-9 4.5 9\" />", "volume-x": "<path d=\"M11 4.702a.705.705 0 0 0-1.203-.498L6.413 7.587A1.4 1.4 0 0 1 5.416 8H3a1 1 0 0 0-1 1v6a1 1 0 0 0 1 1h2.416a1.4 1.4 0 0 1 .997.413l3.383 3.384A.705.705 0 0 0 11 19.298z\" /> <line x1=\"22\" x2=\"16\" y1=\"9\" y2=\"15\" /> <line x1=\"16\" x2=\"22\" y1=\"9\" y2=\"15\" />", "rotate-cw": "<path d=\"M21 12a9 9 0 1 1-9-9c2.52 0 4.93 1 6.74 2.74L21 8\" /> <path d=\"M21 3v5h-5\" />", "crop": "<path d=\"M6 2v14a2 2 0 0 0 2 2h14\" /> <path d=\"M18 22V8a2 2 0 0 0-2-2H2\" />", "plus": "<path d=\"M5 12h14\" /> <path d=\"M12 5v14\" />", "download": "<path d=\"M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4\" /> <polyline points=\"7 10 12 15 17 10\" /> <line x1=\"12\" x2=\"12\" y1=\"15\" y2=\"3\" />", "bell": "<path d=\"M6 8a6 6 0 0 1 12 0c0 7 3 9 3 9H3s3-2 3-9\" /> <path d=\"M10.3 21a1.94 1.94 0 0 0 3.4 0\" />", "image-plus": "<path d=\"M16 5h6\" /> <path d=\"M19 2v6\" /> <path d=\"M21 11.5V19a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h7.5\" /> <path d=\"m21 15-3.086-3.086a2 2 0 0 0-2.828 0L6 21\" /> <circle cx=\"9\" cy=\"9\" r=\"2\" />", "triangle-alert": "<path d=\"m21.73 18-8-14a2 2 0 0 0-3.48 0l-8 14A2 2 0 0 0 4 21h16a2 2 0 0 0 1.73-3\" /> <path d=\"M12 9v4\" /> <path d=\"M12 17h.01\" />", "arrow-right": "<path d=\"M5 12h14\" /> <path d=\"m12 5 7 7-7 7\" />", "eye": "<path d=\"M2.062 12.348a1 1 0 0 1 0-.696 10.75 10.75 0 0 1 19.876 0 1 1 0 0 1 0 .696 10.75 10.75 0 0 1-19.876 0\" /> <circle cx=\"12\" cy=\"12\" r=\"3\" />", "message-circle": "<path d=\"M7.9 20A9 9 0 1 0 4 16.1L2 22Z\" />", "message-square-text": "<path d=\"M21 15a2 2 0 0 1-2 2H7l-4 4V5a2 2 0 0 1 2-2h14a2 2 0 0 1 2 2z\" /> <path d=\"M13 8H7\" /> <path d=\"M17 12H7\" />", "smartphone": "<rect width=\"14\" height=\"20\" x=\"5\" y=\"2\" rx=\"2\" ry=\"2\" /> <path d=\"M12 18h.01\" />"};
-
-ICONS.tomb = '<path d="M6 21V10a6 6 0 0 1 12 0v11"/><path d="M4 21h16"/><path d="M12 9v6"/><path d="M9.5 11.5h5"/>';
 const ic = (n, cls='') => `<svg class="i ${cls}" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">${ICONS[n] || ''}</svg>`;
 const paintIcons = root => root.querySelectorAll('i[data-i]').forEach(el => { el.outerHTML = ic(el.dataset.i, el.className); });
 paintIcons(document);
@@ -20,7 +17,10 @@ paintIcons(document);
 const $ = id => document.getElementById(id);
 const today = new Date(); today.setHours(0,0,0,0);
 const iso = d => d.toISOString().slice(0,10);
-const longDate = s => { const [y, m, d] = s.split('-').map(Number); return `${d} ${['January','February','March','April','May','June','July','August','September','October','November','December'][m - 1]} ${y}`; };
+const MONTHS = ['January','February','March','April','May','June','July','August','September','October','November','December'];
+const longDate = s => { const [y, m, d] = s.split('-').map(Number); return `${d} ${MONTHS[m - 1]} ${y}`; };
+// whole days from today until a YYYY-MM-DD date (negative once it has passed); null when there is no date
+const daysUntil = s => s ? Math.round((new Date(s + 'T00:00:00') - today) / 864e5) : null;
 const plus = n => { const d = new Date(today); d.setDate(d.getDate()+n); return iso(d); };
 const store = { get(k, f){ try { const v = localStorage.getItem(k); return v ? JSON.parse(v) : f; } catch { return f; } }, set(k, v){ try { localStorage.setItem(k, JSON.stringify(v)); } catch {} } };
 let pages = [], chosenSample = null, current = null, currentItem = null;
@@ -130,6 +130,8 @@ async function addFiles(files){
   chosenSample = null; $('text').value = ''; $('inputCard').classList.remove('pasting');
   renderThumbs(); refresh(); sfx('tick'); refit();
 }
+// swap page i's image for a new blob, freeing the old preview URL
+function replacePage(i, blob){ URL.revokeObjectURL(pages[i].url); pages[i] = { ...pages[i], blob, url: URL.createObjectURL(blob) }; }
 function loadImg(src){ return new Promise((res, rej) => { const i = new Image(); i.onload = () => res(i); i.onerror = rej; i.src = src; }); }
 async function toJpeg(f, rotate = 0, crop = null){
   const img = await loadImg(f instanceof Blob ? URL.createObjectURL(f) : f);
@@ -168,7 +170,7 @@ function renderThumbs(){
   $('thumbs').querySelectorAll('[data-act]').forEach(b => b.onclick = async e => {
     e.stopPropagation(); const i = +b.dataset.i;
     if (b.dataset.act === 'del') { URL.revokeObjectURL(pages[i].url); pages.splice(i, 1); showQuality(); renderThumbs(); refresh(); }
-    if (b.dataset.act === 'rot') { const nb = await toJpeg(pages[i].blob, 90); URL.revokeObjectURL(pages[i].url); pages[i] = { ...pages[i], blob: nb, url: URL.createObjectURL(nb) }; renderThumbs(); }
+    if (b.dataset.act === 'rot') { replacePage(i, await toJpeg(pages[i].blob, 90)); renderThumbs(); }
     if (b.dataset.act === 'crop') openCrop(i);
   });
   const add = $('thumbs').querySelector('.addpg'); if (add) add.onclick = e => { e.stopPropagation(); replaceIdx = -1; file.click(); };
@@ -192,7 +194,7 @@ function paintBox(){ const b = $('cropbox'); b.style.left = box.x*100 + '%'; b.s
   });
   $('cropbox').addEventListener('pointerup', () => mode = null);
 })();
-$('cropApply').onclick = async () => { const i = cropIdx; const nb = await toJpeg(pages[i].blob, 0, box); URL.revokeObjectURL(pages[i].url); pages[i] = { ...pages[i], blob: nb, url: URL.createObjectURL(nb) }; closeOverlay($('cropper')); await checkQuality(i); renderThumbs(); };
+$('cropApply').onclick = async () => { const i = cropIdx; replacePage(i, await toJpeg(pages[i].blob, 0, box)); closeOverlay($('cropper')); await checkQuality(i); renderThumbs(); };
 
 document.querySelectorAll('[data-sample]').forEach(b => b.onclick = () => {
   chosenSample = b.dataset.sample; pages = []; renderThumbs(); showQuality();
@@ -317,7 +319,7 @@ function applyChecks(d){
     const m = /^\d{4}-\d{2}-\d{2}$/.test(d.deadline) ? new Date(d.deadline + 'T00:00:00') : null;
     if (!m || isNaN(m)) { checks.push(['bad',`Deadline "${d.deadline}" isn't a real date. Please check the letter yourself`]); d.deadline = null; }
     else {
-      d.days = Math.round((m - today) / 864e5);
+      d.days = daysUntil(d.deadline);
       checks.push(['ok','Deadline is a real date']);
       if (d.days < 0) { checks.push(['bad','The deadline seems to have passed. Act today and contact the sender']); d.urgency = 'high'; }
       else if (d.days <= 7 && d.urgency !== 'high') { d.urgency = 'high'; checks.push(['bad','Deadline is within 7 days, so urgency was raised to high']); }
@@ -367,25 +369,26 @@ function renderYard(){
   paintYardBadge();
   document.body.classList.toggle('hasyard', yard.length > 0);
   $('yard').hidden = !yard.length;
-  const dleft = it => it.d.deadline ? Math.round((new Date(it.d.deadline+'T00:00:00') - today) / 864e5) : null;
-  const rank = it => it.banished ? 1e6 : dleft(it) !== null ? dleft(it) : it.d.scam_risk === 'high' ? 5e5 : 4e5;
-  const sorted = [...yard].sort((a, b) => rank(a) - rank(b));
-  const haunting = yard.filter(it => !it.banished && dleft(it) !== null && dleft(it) <= 3).length;
+  const sorted = [...yard].sort((a, b) => yardRank(a) - yardRank(b));
+  const haunting = yard.filter(isHaunting).length;
   $('yard').querySelector('.label').innerHTML = `${ic('tomb')}Your Graveyard${haunting ? ` <span class="hauntcount">· ${haunting} haunting you</span>` : ''}`;
   $('yardrow').innerHTML = sorted.slice(0, 6).map(it => {
     const d = it.d, dead = it.banished; let dl;
     if (dead) dl = '<span class="dl" style="color:var(--slime)">Banished</span>';
-    else if (d.deadline) { const days = Math.round((new Date(d.deadline+'T00:00:00') - today) / 864e5); dl = `<span class="dl" style="color:${days <= 7 ? 'var(--blood)' : 'var(--amber)'}">${days < 0 ? 'Overdue' : days === 0 ? 'Today' : days + 'd left'}</span>`; }
+    else if (d.deadline) { const days = dleftOf(it); dl = `<span class="dl" style="color:${days <= 7 ? 'var(--blood)' : 'var(--amber)'}">${days < 0 ? 'Overdue' : days === 0 ? 'Today' : days + 'd left'}</span>`; }
     else dl = `<span class="dl" style="color:var(--muted)">${d.scam_risk === 'high' ? 'Scam' : 'No date'}</span>`;
-    const haunt = !dead && dleft(it) !== null && dleft(it) <= 3;
+    const haunt = isHaunting(it);
     return `<button class="stone ${dead ? 'dead' : ''} ${haunt ? 'haunt' : ''}" data-id="${it.id}" title="${esc(d.letter_type || 'Letter')}" aria-label="${esc(d.letter_type)}, ${dead ? 'banished' : haunt ? 'due very soon' : 'open'}"><div class="tomb"><span class="rip">${dead ? 'R.I.P.' : haunt ? 'Haunting' : 'Boo'}</span><span class="nm">${esc(d.letter_type || 'Letter')}</span>${dl}</div></button>`;
   }).join('');
   $('yardrow').querySelectorAll('.stone').forEach(b => b.onclick = () => { const it = yard.find(x => x.id === b.dataset.id); if (it) { current = it.ctx || null; shownAt = 0; show(it.d, false, it); } });
 }
-$('clearYard').onclick = () => { yard = []; saveYard(); renderYard(); };
-$('clearYard2').onclick = () => { yard = []; saveYard(); renderYard(); renderYardSheet(); };
-const dleftOf = it => it.d.deadline ? Math.round((new Date(it.d.deadline+'T00:00:00') - today) / 864e5) : null;
+function clearYard(){ yard = []; saveYard(); renderYard(); renderYardSheet(); }
+$('clearYard').onclick = $('clearYard2').onclick = clearYard;
+const dleftOf = it => daysUntil(it.d.deadline);
+// most urgent first: by days left, then scams, then letters with no date, banished last
 const yardRank = it => it.banished ? 1e6 : dleftOf(it) !== null ? dleftOf(it) : it.d.scam_risk === 'high' ? 5e5 : 4e5;
+// open letters due within 3 days (or overdue) haunt you
+const isHaunting = it => !it.banished && dleftOf(it) !== null && dleftOf(it) <= 3;
 function yardStatus(it){
   const n = dleftOf(it);
   if (it.banished) return ['Banished', 'var(--slime)'];
@@ -398,7 +401,7 @@ function yardStatus(it){
 function renderYardSheet(){
   const sorted = [...yard].sort((a, b) => yardRank(a) - yardRank(b));
   $('yardList').innerHTML = sorted.length ? sorted.map(it => {
-    const [label, col] = yardStatus(it), n = dleftOf(it), haunt = !it.banished && n !== null && n <= 3;
+    const [label, col] = yardStatus(it), haunt = isHaunting(it);
     return `<button class="yrow ${it.banished ? 'dead' : ''} ${haunt ? 'haunt' : ''}" data-id="${it.id}"><span class="mini"></span><span class="info"><b>${esc(it.d.letter_type || 'Letter')}</b><small>${esc(it.d.sender ? clean(it.d.sender) : '')}</small></span><span class="pill" style="color:${col}">${label}</span></button>`;
   }).join('')
   : `<div class="yempty">${ic('tomb')}<br>No letters yet. Read one and it will rest here.</div>`;
@@ -406,7 +409,7 @@ function renderYardSheet(){
   $('yardList').querySelectorAll('.yrow').forEach(b => b.onclick = () => { const it = yard.find(x => x.id === b.dataset.id); if (it) { closeOverlay($('yardSheet')); current = it.ctx || null; shownAt = 0; show(it.d, false, it); } });
 }
 function paintYardBadge(){
-  const haunting = yard.filter(it => !it.banished && dleftOf(it) !== null && dleftOf(it) <= 3).length;
+  const haunting = yard.filter(isHaunting).length;
   $('yardBadge').hidden = !haunting; $('yardBadge').textContent = haunting;
   $('yardBtn').setAttribute('aria-label', haunting ? `Your Graveyard, ${haunting} letter${haunting === 1 ? '' : 's'} due very soon` : 'Your Graveyard');
 }
@@ -564,7 +567,7 @@ function whereInLetter(j, text){
   return hit.test(safe) ? safe.replace(hit, m => `<mark>${m}</mark>`) : safe;
 }
 function dateForms(iso){
-  const [y, m, dd] = iso.split('-').map(Number), M = ['January','February','March','April','May','June','July','August','September','October','November','December'][m - 1], S = M.slice(0, 3);
+  const [y, m, dd] = iso.split('-').map(Number), M = MONTHS[m - 1], S = M.slice(0, 3);
   const p = n => String(n).padStart(2, '0');
   return [iso, `${dd} ${M} ${y}`, `${p(dd)} ${M} ${y}`, `${dd} ${S} ${y}`, `${p(dd)} ${S} ${y}`, `${M} ${dd}, ${y}`, `${S} ${dd}, ${y}`, `${p(dd)}/${p(m)}/${y}`, `${dd}/${m}/${y}`, `${p(dd)}.${p(m)}.${y}`, `${dd} ${M}`, `${dd} ${S}`];
 }
@@ -586,11 +589,10 @@ function redact(s){
   s = s.replace(/\b(Singapore\s*|S\s?\()\d{6}\)?/gi, () => hit('Singapore ••••••'));
   return { text: s, n };
 }
-const daysLeft = d => d.deadline ? Math.round((new Date(d.deadline+'T00:00:00') - today) / 864e5) : null;
 
 async function show(d, fresh, item){
   const wait = 2600 - (Date.now() - shownAt); if (fresh && wait > 0) await new Promise(r => setTimeout(r, wait));
-  d.days = daysLeft(d);
+  d.days = daysUntil(d.deadline);
   if (fresh) {
     item = { id: Date.now().toString(36) + Math.random().toString(36).slice(2,6), savedAt: Date.now(), d, done: [], banished: false, ctx: current && current.text ? { text: current.text, lang: current.lang, pages: 1 } : { lang: current && current.lang, pages: current && current.images ? current.images.length : 1 } };
     yard.unshift(item); yard = yard.slice(0, 15); saveYard();
@@ -607,8 +609,8 @@ async function show(d, fresh, item){
   $('lsender').textContent = d.sender ? (/^(claims|pretends|says)/i.test(d.sender) ? clean(d.sender) : 'From ' + clean(d.sender)) : '';
 
   const risk = {low:['Low','Looks genuine','check','var(--slime)'], medium:['Medium','Double-check it','shield-alert','var(--amber)'], high:['High','Likely a scam','shield-alert','var(--blood)']}[d.scam_risk];
-  const letterTxt = (item.ctx && item.ctx.text) || (current && current.text) || '';
-  const dlWhere = d.deadline ? whereFor('deadline', d, letterTxt) : '', amWhere = d.amount ? whereFor('amount', d, letterTxt) : '';
+  const letterText = (item.ctx && item.ctx.text) || (current && current.text) || '';
+  const dlWhere = d.deadline ? whereFor('deadline', d, letterText) : '', amWhere = d.amount ? whereFor('amount', d, letterText) : '';
   const tileTag = (w, kind) => w ? `button class="tile" type="button" data-where="${kind}" aria-label="Show where the letter says the ${kind}"` : 'div class="tile"';
   const tileEnd = w => w ? 'button' : 'div';
   $('tiles').innerHTML = [
@@ -634,7 +636,6 @@ async function show(d, fresh, item){
   $('wordsBtn').hidden = !jargon.length;
   $('wordsBtn').setAttribute('aria-label', `Decode ${jargon.length} scary words`); $('wordsBtn').querySelector('span').textContent = 'Words';
   document.querySelector('.actions').style.gridTemplateColumns = `repeat(${[canSpeak, true, true, jargon.length > 0].filter(Boolean).length}, minmax(0, 1fr))`;
-  const letterText = (item.ctx && item.ctx.text) || (current && current.text) || '';
   const pick = i => {
     $('wordchips').querySelectorAll('.chip').forEach((c, k) => c.setAttribute('aria-selected', k === i));
     const j = jargon[i], where = whereInLetter(j, letterText), multi = item.ctx && item.ctx.pages > 1;

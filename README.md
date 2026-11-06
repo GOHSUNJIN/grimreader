@@ -36,7 +36,7 @@ The people hit hardest are older people, migrant workers and expats reading lett
 Grim Reader stitches together parts that don't usually meet: a camera, a language model, rule-based safety checks, speech synthesis, calendar links and messaging apps, all wrapped in a haunted-house skin. The spooky theme has a job: it makes a stressful task feel lighter, and the spirit's mood tells you how urgent a letter is at a glance.
 
 ## How We Built It
-- A static web app: `index.html` (markup), `style.css` (styles) and `app.js` (behaviour). No framework and no build step, so it loads fast on old phones.
+- A static web app: `index.html` (markup), `style.css` (styles), `app.js` (behaviour) and `icons.js` (icon data). No framework and no build step, so it loads fast on old phones.
 - The AI reading step sends the letter and a strict JSON prompt to Claude, then runs every answer through our own rule checks (`applyChecks` in `app.js`) before showing it.
 - Illustrations (the reaper, envelope and wax seal) are hand-made inline SVG. Icons are from Lucide. Sound effects are generated in the browser with the Web Audio API.
 - A layout routine (`fit()`) tightens spacing step by step so every screen fits on any device without scrolling.

@@ -1,1 +1,4 @@
 .vercel
+# secrets: never commit API keys
+.env
+.env.*

@@ -5,7 +5,7 @@ const PROJECT = {
     { name: 'Sun Jin', role: 'Developer', link: 'https://gohsunjin.vercel.app/' },
     { name: 'Ritish', role: 'Developer', link: 'https://www.linkedin.com/in/prabhakaran-ritish-45286921a/' }
   ],
-  github: '',   // e.g. 'https://github.com/you/grim-reader'
+  github: 'https://github.com/GOHSUNJIN/grimreader',
   devpost: ''   // your Devpost project page
 };
 // ==========================================

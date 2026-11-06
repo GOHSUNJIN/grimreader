@@ -514,13 +514,6 @@ ul.todo li.done .txt{text-decoration:line-through;color:var(--muted)}
   .actions .sec svg{width:17px;height:17px}
   .tile .t svg{display:none}
 }
-/* very narrow phones: four header buttons need the title a little smaller */
-@media (max-width:380px){
-  h1{font-size:21px}
-  .logo,.logo svg{width:32px;height:32px}
-  .headbtns{gap:4px}
-  .iconbtn{width:34px;height:34px}
-}
 @media (max-width:400px){
   .introreaper,.introreaper svg{width:72px}
   .modal .introbubble h2{font-size:22px}
@@ -565,15 +558,6 @@ ul.todo li.done .txt{text-decoration:line-through;color:var(--muted)}
   .actions .sec{flex-direction:column;gap:3px;font-size:12px;padding:7px 2px}
   .tile .t svg{display:none}
 }
-
-/* ===== calm mode: bigger text, higher contrast, no moving effects (toggle in the header) ===== */
-body.calm{--muted:#ddd6ec;--line:#5b4a78;--card:rgba(22,16,33,.97)}
-body.calm .stars,body.calm .fogwrap,body.calm .batlane,body.calm .moon{display:none}
-body.calm *,body.calm *::before,body.calm *::after{animation:none!important;transition:none!important}
-body.calm .stage .spirit{opacity:1;transform:translateY(-62px)}
-body.calm .label,body.calm .step,body.calm .tab,body.calm .prog,body.calm .checks,body.calm .fine,body.calm .foot,body.calm .from small,body.calm .tile .t,body.calm .tile small,body.calm .tile .where,body.calm .first .fl,body.calm .first .due,body.calm .sample small,body.calm .kinds span,body.calm .tomb .nm,body.calm .remindcard .rt small,body.calm .member .who small,body.calm .introsteps small{font-size:13.5px}
-body.calm .bubble,body.calm:not(.fit1) #pane-verdict .bubble,body.calm ul.todo li,body.calm .first p,body.calm .msg{font-size:16.5px}
-body.calm .sec,body.calm .chip{font-size:14.5px}
 
 /* ===== fit levels: added one by one by fit() in app.js only when something would be cut off ===== */
 body.fit1 .tag,body.fit1 .foot,body.fit1 .yard,body.fit1 .tile small{display:none}

@@ -31,7 +31,6 @@ The people hit hardest are older people, migrant workers and expats reading lett
 | **Listen** | The verdict read aloud with the best voice on your device, highlighting each sentence |
 | **Reminders** | A reminder card beside the checklist adds the deadline to Google Calendar |
 | **Graveyard** | Every letter you've handled as a tombstone, most urgent first, R.I.P. once banished |
-| **Calm Mode** | One tap for bigger text, higher contrast and no moving effects, for older readers or anyone who finds the spooky theme too much |
 | **Built for everyone** | Fits every screen without scrolling, large tap targets, keyboard and screen reader support, reduced-motion support |
 
 ## Why Frankenstein

@@ -88,17 +88,6 @@ function paintSound(){ $('soundBtn').innerHTML = ic(sound ? 'volume-2' : 'volume
 $('soundBtn').onclick = () => { sound = !sound; store.set('gr-sound', sound); paintSound(); if (sound) SFX.tick(); };
 paintSound();
 
-// ---------- calm mode: bigger text, higher contrast, no moving effects ----------
-let calm = store.get('gr-calm', false);
-function paintCalm(){
-  document.body.classList.toggle('calm', calm);
-  $('calmBtn').setAttribute('aria-pressed', calm);
-  $('calmBtn').querySelector('.lbl').textContent = calm ? 'Calm On' : 'Calm Mode';
-  setTimeout(fit, 60);
-}
-$('calmBtn').onclick = () => { calm = !calm; store.set('gr-calm', calm); paintCalm(); };
-paintCalm();
-
 // ---------- language remembered ----------
 const savedLang = store.get('gr-lang', null);
 if (savedLang && [...$('lang').options].some(o => o.text === savedLang)) $('lang').value = savedLang;
@@ -807,9 +796,24 @@ function overflowing(){
     return kids(z).some(c => c.offsetParent && c.getBoundingClientRect().bottom > limit);
   });
 }
+const FIT_LEVELS = ['fit1', 'fit2', 'fit3', 'fit4'];
+// how many fit levels the current layout needs (0 = fits as is)
+function levelNeeded(){
+  const b = document.body; b.classList.remove(...FIT_LEVELS);
+  for (let i = 0; i < FIT_LEVELS.length; i++) { if (!overflowing()) return i; b.classList.add(FIT_LEVELS[i]); }
+  return FIT_LEVELS.length;
+}
 function fit(){
-  const b = document.body; b.classList.remove('fit1', 'fit2', 'fit3', 'fit4');
-  for (const lvl of ['fit1', 'fit2', 'fit3', 'fit4']) { if (!overflowing()) return; b.classList.add(lvl); }
+  let need;
+  if ($('result').classList.contains('on') && window.innerWidth >= 700) {
+    // Two columns: the verdict stays on screen beside the tabs, so size for the tallest tab.
+    // Otherwise the verdict would grow and shrink every time you switch tabs.
+    const panes = [...document.querySelectorAll('.side .pane')], shown = panes.find(p => p.classList.contains('on'));
+    need = Math.max(...panes.map(p => { panes.forEach(x => x.classList.toggle('on', x === p)); return levelNeeded(); }));
+    panes.forEach(x => x.classList.toggle('on', x === shown));
+  } else need = levelNeeded();
+  document.body.classList.remove(...FIT_LEVELS);
+  FIT_LEVELS.slice(0, need).forEach(c => document.body.classList.add(c));
 }
 let fitTimer = null;
 const refit = () => { clearTimeout(fitTimer); fitTimer = setTimeout(fit, 60); };

@@ -276,7 +276,23 @@ window.addEventListener('resize', () => { const sel = tabs.find(t => t.getAttrib
 
 // ---------- AI reading ----------
 let samplePromise = null;
-function getSample(){ if (!samplePromise) samplePromise = (window.claude && window.claude.use) ? window.claude.use('sample').catch(()=>null) : Promise.resolve(null); return samplePromise; }
+// Server adapter: same shape as the claude sample call. Posts to /api/read and resolves { text }.
+function blobToDataURL(b){ return new Promise((res, rej) => { const r = new FileReader(); r.onload = () => res(r.result); r.onerror = () => rej(r.error); r.readAsDataURL(b); }); }
+function serverSample(){
+  return async function sample(promptText, opts = {}){
+    const images = await Promise.all((opts.images || []).map(blobToDataURL));
+    let res;
+    try {
+      res = await fetch('/api/read', { method:'POST', headers:{ 'Content-Type':'application/json' }, body: JSON.stringify({ prompt: promptText, images }) });
+    } catch { throw { code:'network' }; }
+    let body = null;
+    try { body = await res.json(); } catch {}
+    if (!res.ok) throw { code: (body && body.code) || 'failed' };
+    if (!body || typeof body !== 'object') throw { code:'bad_reply' };
+    return { text: JSON.stringify(body) };
+  };
+}
+function getSample(){ if (!samplePromise) samplePromise = (window.claude && window.claude.use) ? window.claude.use('sample').catch(()=>null) : Promise.resolve(serverSample()); return samplePromise; }
 getSample();
 
 function prompt(lang, text){
@@ -328,14 +344,14 @@ async function run(){
       await new Promise(r => setTimeout(r, 700));
       data = structuredClone(SAMPLES[chosenSample].canned);
     } else {
-      throw {code:'unavailable'};
+      throw {code:'failed'};
     }
   } catch (e) {
     if (chosenSample) data = structuredClone(SAMPLES[chosenSample].canned);
     else {
       const msg = e && e.code === 'no_images' ? "Photos can't be read here yet. Please paste the letter's text instead."
         : e && e.code === 'rate_limited' ? 'Too many letters at once. Please wait a minute and try again.'
-        : e && e.code === 'unavailable' ? 'Reading your own letters isn\u2019t switched on in this version yet. Try one of the sample letters.'
+        : e && e.code === 'too_large' ? "That's a lot of letter. Try fewer pages or a shorter text."
         : e && e.code === 'not_granted' ? 'Reading letters needs permission to use Claude. Allow it when asked or try a sample letter.'
         : "We couldn't read that letter. Try a clearer photo, paste the text or try a sample letter.";
       status(msg); refresh(); return;

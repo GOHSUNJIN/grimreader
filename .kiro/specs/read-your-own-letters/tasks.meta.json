@@ -87,6 +87,18 @@
         "chatSessionId": "sess_e7cfeffe-5667-49af-82d2-eea435138770",
         "timestamp": 1795467070300
       }
+    ],
+    "4. Connect the browser to `api/read.js`": [
+      {
+        "executionId": "de73c27a-3bf7-4a1f-a054-5aa66c3a45a0",
+        "chatSessionId": "sess_74c74b3b-08f3-4e73-876a-4a86a513623a",
+        "timestamp": 1795467213393
+      },
+      {
+        "executionId": "de73c27a-3bf7-4a1f-a054-5aa66c3a45a0",
+        "chatSessionId": "sess_74c74b3b-08f3-4e73-876a-4a86a513623a",
+        "timestamp": 1795467342255
+      }
     ]
   }
 }

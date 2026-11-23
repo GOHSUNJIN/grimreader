@@ -31,7 +31,7 @@
   - Unit-test validation with the model call mocked
   - _Requirements: 2.1, 2.2, 2.3, 2.4, 2.5, 2.6_
 
-- [ ] 4. Connect the browser to `api/read.js`
+- [x] 4. Connect the browser to `api/read.js`
   - In `getSample()`, fall back to an adapter that posts to `/api/read` when `window.claude` is missing
   - Convert page blobs to data URLs; keep the 2.6 s séance timing
   - Map `rate_limited`, `too_large` and other errors to the messages in the design

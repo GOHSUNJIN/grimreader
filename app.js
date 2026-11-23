@@ -292,6 +292,21 @@ function serverSample(){
     return { text: JSON.stringify(body) };
   };
 }
+// Ask adapter: flattens the chat into one prompt and posts to /api/ask. Resolves { text }.
+function serverAsk(){
+  return async function sample(msgs){
+    const prompt = msgs.map((m, i) => i === 0 ? m.content : `${m.role === 'user' ? 'USER' : 'GRIM READER'}: ${m.content}`).join('\n\n');
+    let res;
+    try {
+      res = await fetch('/api/ask', { method:'POST', headers:{ 'Content-Type':'application/json' }, body: JSON.stringify({ prompt }) });
+    } catch { throw { code:'network' }; }
+    let body = null;
+    try { body = await res.json(); } catch {}
+    if (!res.ok) throw { code: (body && body.code) || 'failed' };
+    if (!body || typeof body.text !== 'string') throw { code:'bad_reply' };
+    return { text: body.text };
+  };
+}
 function getSample(){ if (!samplePromise) samplePromise = (window.claude && window.claude.use) ? window.claude.use('sample').catch(()=>null) : Promise.resolve(serverSample()); return samplePromise; }
 getSample();
 
@@ -515,7 +530,8 @@ function renderChat(){
 }
 async function ask(q){
   q = q.trim(); if (!q) return;
-  const sample = await getSample();
+  const hasClaude = !!(window.claude && window.claude.use);
+  const sample = hasClaude ? await getSample() : serverAsk();
   if (!sample) { $('askNote').textContent = 'Asking questions needs Claude to be available in this view.'; return; }
   const d = currentItem.d, lang = (current && current.lang) || 'English';
   chat.push({role:'user', content:q}, {role:'assistant', content:''}); renderChat();

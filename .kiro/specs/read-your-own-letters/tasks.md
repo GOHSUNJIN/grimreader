@@ -38,7 +38,7 @@
   - Remove the "isn't switched on in this version yet" message
   - _Requirements: 1.1, 1.2, 1.3, 1.4, 1.5, 1.6, 3.1, 3.2, 3.3_
 
-- [ ] 5. Build `api/ask.js` and connect the Ask tab
+- [x] 5. Build `api/ask.js` and connect the Ask tab
   - Same validation and limits as `api/read.js`; returns `{ text }`
   - `ask()` uses it when `window.claude` is missing
   - _Requirements: 4.1, 4.2_

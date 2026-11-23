@@ -22,10 +22,10 @@ function imageBytes(s) {
   return Math.floor((b64.length * 3) / 4);
 }
 
-function createHandler({ generate: gen = generate, now = Date.now, model = () => process.env.LETTER_MODEL } = {}) {
+// Best-effort in-memory limiter: LIMIT requests per WINDOW_MS per key.
+function makeLimiter(now) {
   const hits = new Map();
-
-  function limited(key) {
+  return function limited(key) {
     const t = now();
     const recent = (hits.get(key) || []).filter((x) => t - x < WINDOW_MS);
     if (recent.length >= LIMIT) {
@@ -38,7 +38,11 @@ function createHandler({ generate: gen = generate, now = Date.now, model = () =>
       for (const [k, v] of hits) if (!v.some((x) => t - x < WINDOW_MS)) hits.delete(k);
     }
     return false;
-  }
+  };
+}
+
+function createHandler({ generate: gen = generate, now = Date.now, model = () => process.env.LETTER_MODEL } = {}) {
+  const limited = makeLimiter(now);
 
   return async function handler(req, res) {
     const send = (status, body) => res.status(status).json(body);
@@ -74,3 +78,5 @@ function createHandler({ generate: gen = generate, now = Date.now, model = () =>
 
 module.exports = createHandler();
 module.exports.createHandler = createHandler;
+module.exports.makeLimiter = makeLimiter;
+module.exports.MAX_TEXT = MAX_TEXT;

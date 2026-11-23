@@ -99,6 +99,18 @@
         "chatSessionId": "sess_74c74b3b-08f3-4e73-876a-4a86a513623a",
         "timestamp": 1795467342255
       }
+    ],
+    "5. Build `api/ask.js` and connect the Ask tab": [
+      {
+        "executionId": "e8069b8c-64b5-49a9-a925-2222046f6fe0",
+        "chatSessionId": "sess_5452ed8c-9532-4867-b300-8528c692a76d",
+        "timestamp": 1795467411630
+      },
+      {
+        "executionId": "e8069b8c-64b5-49a9-a925-2222046f6fe0",
+        "chatSessionId": "sess_5452ed8c-9532-4867-b300-8528c692a76d",
+        "timestamp": 1795467528623
+      }
     ]
   }
 }

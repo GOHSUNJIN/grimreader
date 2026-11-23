@@ -9,5 +9,8 @@
   },
   "devDependencies": {
     "fast-check": "^3.23.2"
+  },
+  "dependencies": {
+    "ai": "^7.0.180"
   }
 }

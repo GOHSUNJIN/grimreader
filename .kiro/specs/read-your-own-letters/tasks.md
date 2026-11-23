@@ -24,7 +24,7 @@
   - JSON with surrounding text, no JSON, broken JSON
   - _Requirements: 2.5_
 
-- [ ] 3. Build `api/read.js`
+- [x] 3. Build `api/read.js`
   - Validate body (empty, too large) and rate limit per client
   - Call the model with `generateText` (AI SDK) using `process.env.LETTER_MODEL` through AI Gateway, sending text and image parts
   - Return the parsed verdict or `bad_reply`; never log bodies

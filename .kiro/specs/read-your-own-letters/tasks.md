@@ -6,7 +6,7 @@
   - Confirm the three samples still render exactly as before
   - _Requirements: 5.1_
 
-- [~] 2. Set up tests
+- [x] 2. Set up tests
   - Add `package.json` with `fast-check` as a dev dependency and `"test": "node --test tests/"`
   - _Requirements: 5_
 
@@ -15,12 +15,12 @@
   - Properties for acceptance criteria 5.2 to 5.6
   - _Requirements: 5.2, 5.3, 5.4, 5.5, 5.6_
 
-- [ ] 2.2 Property-based tests for `redact`
+- [x] 2.2 Property-based tests for `redact`
   - Generate strings containing NRIC-style IDs, emails, card and account numbers, unit numbers and postcodes
   - Property for acceptance criterion 5.7
   - _Requirements: 5.7_
 
-- [ ] 2.3 Unit tests for `parseJSON`
+- [x] 2.3 Unit tests for `parseJSON`
   - JSON with surrounding text, no JSON, broken JSON
   - _Requirements: 2.5_
 

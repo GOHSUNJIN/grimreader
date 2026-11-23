@@ -28,6 +28,16 @@
         "executionId": "59e5c7ae-cedb-40a0-a902-fc711c89950b",
         "chatSessionId": "sess_aca47477-1b3a-46d0-a222-c574b64517d4",
         "timestamp": 1795427006511
+      },
+      {
+        "executionId": "12772cff-54d4-4cad-9d97-9166e62410ec",
+        "chatSessionId": "sess_5483149a-d465-49c1-b4ab-1a1ef673e367",
+        "timestamp": 1795457698466
+      },
+      {
+        "executionId": "12772cff-54d4-4cad-9d97-9166e62410ec",
+        "chatSessionId": "sess_5483149a-d465-49c1-b4ab-1a1ef673e367",
+        "timestamp": 1795466625222
       }
     ],
     "2.2 Property-based tests for `redact`": [
@@ -35,6 +45,35 @@
         "executionId": "59e5c7ae-cedb-40a0-a902-fc711c89950b",
         "chatSessionId": "sess_aca47477-1b3a-46d0-a222-c574b64517d4",
         "timestamp": 1795427011909
+      },
+      {
+        "executionId": "367a5250-a843-490e-8985-ae7f53bcd2da",
+        "chatSessionId": "sess_5483149a-d465-49c1-b4ab-1a1ef673e367",
+        "timestamp": 1795457393814
+      },
+      {
+        "executionId": "367a5250-a843-490e-8985-ae7f53bcd2da",
+        "chatSessionId": "sess_5483149a-d465-49c1-b4ab-1a1ef673e367",
+        "timestamp": 1795457623927
+      }
+    ],
+    "2.3 Unit tests for `parseJSON`": [
+      {
+        "executionId": "12772cff-54d4-4cad-9d97-9166e62410ec",
+        "chatSessionId": "sess_5483149a-d465-49c1-b4ab-1a1ef673e367",
+        "timestamp": 1795466625716
+      },
+      {
+        "executionId": "12772cff-54d4-4cad-9d97-9166e62410ec",
+        "chatSessionId": "sess_5483149a-d465-49c1-b4ab-1a1ef673e367",
+        "timestamp": 1795466729214
+      }
+    ],
+    "2. Set up tests": [
+      {
+        "executionId": "12772cff-54d4-4cad-9d97-9166e62410ec",
+        "chatSessionId": "sess_5483149a-d465-49c1-b4ab-1a1ef673e367",
+        "timestamp": 1795466729273
       }
     ]
   }

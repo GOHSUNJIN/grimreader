@@ -19,8 +19,6 @@ const today = new Date(); today.setHours(0,0,0,0);
 const iso = d => d.toISOString().slice(0,10);
 const MONTHS = ['January','February','March','April','May','June','July','August','September','October','November','December'];
 const longDate = s => { const [y, m, d] = s.split('-').map(Number); return `${d} ${MONTHS[m - 1]} ${y}`; };
-// whole days from today until a YYYY-MM-DD date (negative once it has passed); null when there is no date
-const daysUntil = s => s ? Math.round((new Date(s + 'T00:00:00') - today) / 864e5) : null;
 const plus = n => { const d = new Date(today); d.setDate(d.getDate()+n); return iso(d); };
 const store = { get(k, f){ try { const v = localStorage.getItem(k); return v ? JSON.parse(v) : f; } catch { return f; } }, set(k, v){ try { localStorage.setItem(k, JSON.stringify(v)); } catch {} } };
 let pages = [], chosenSample = null, current = null, currentItem = null;
@@ -345,53 +343,10 @@ async function run(){
   }
   if (!data) { status("We couldn't make sense of that letter. Try a clearer photo or paste the text."); refresh(); return; }
   status(''); refresh();
-  current = {text, images: (!text && pages.length) ? pages.map(p => p.blob) : null, lang}; show(applyChecks(data), true);
+  current = {text, images: (!text && pages.length) ? pages.map(p => p.blob) : null, lang}; show(applyChecks(data, today), true);
 }
-function parseJSON(t){
-  if (!t) return null;
-  const a = t.indexOf('{'), b = t.lastIndexOf('}');
-  if (a < 0 || b < a) return null;
-  try { return JSON.parse(t.slice(a, b+1)); } catch { return null; }
-}
-
 // ---------- rule checks (never trust the AI blindly) ----------
-function applyChecks(d){
-  const checks = [];
-  const levels = ['low','medium','high'];
-  d.actions = Array.isArray(d.actions) ? d.actions.filter(Boolean).slice(0,6) : [];
-  d.documents = Array.isArray(d.documents) ? d.documents.filter(Boolean) : [];
-  d.scam_reasons = Array.isArray(d.scam_reasons) ? d.scam_reasons : [];
-  d.jargon = Array.isArray(d.jargon) ? d.jargon.filter(j => j && j.term && j.meaning).slice(0,5) : [];
-  if (!levels.includes(d.urgency)) { d.urgency = 'medium'; checks.push(['bad','Urgency was unclear, so we set it to medium to be safe']); }
-  else checks.push(['ok','Urgency level is valid']);
-  if (!levels.includes(d.scam_risk)) d.scam_risk = 'low';
-
-  d.days = null;
-  if (d.deadline) {
-    const m = /^\d{4}-\d{2}-\d{2}$/.test(d.deadline) ? new Date(d.deadline + 'T00:00:00') : null;
-    if (!m || isNaN(m)) { checks.push(['bad',`Deadline "${d.deadline}" isn't a real date. Please check the letter yourself`]); d.deadline = null; }
-    else {
-      d.days = daysUntil(d.deadline);
-      checks.push(['ok','Deadline is a real date']);
-      if (d.days < 0) { checks.push(['bad','The deadline seems to have passed. Act today and contact the sender']); d.urgency = 'high'; }
-      else if (d.days <= 7 && d.urgency !== 'high') { d.urgency = 'high'; checks.push(['bad','Deadline is within 7 days, so urgency was raised to high']); }
-      else checks.push(['ok','Urgency matches the time left']);
-    }
-  } else checks.push(['ok','No deadline found. Double-check the letter for a date']);
-
-  if (d.amount && !/\d/.test(String(d.amount))) { checks.push(['bad','Amount had no number in it, so we hid it']); d.amount = null; }
-  else if (d.amount) checks.push(['ok','Amount contains a real number']);
-
-  const serious = /court|summons|writ|legal|lawyer|bankrupt|immigration|ica|police|debt collect/i.test(`${d.letter_type} ${d.summary} ${d.sender}`);
-  if (serious && !d.needs_human) { d.needs_human = true; d.human_reason = d.human_reason || 'This letter mentions legal or serious matters. A professional should check it.'; checks.push(['bad','Serious wording found, so we added the "talk to a person" advice']); }
-  else checks.push(['ok','Checked for legal or serious wording']);
-
-  if (d.scam_risk === 'high' && d.urgency === 'high') { d.urgency = 'medium'; checks.push(['bad','Likely scam. The real risk is paying, not the deadline, so urgency was lowered']); }
-  d.checks = checks;
-  return d;
-}
-
-
+// applyChecks, daysUntil, redact and parseJSON now live in lib/checks.js (loaded before this file). Pass `today` in.
 
 // ---------- graveyard ----------
 let yard = store.get('gr-yard', []);
@@ -436,7 +391,7 @@ function renderYard(){
 }
 function clearYard(){ yard = []; saveYard(); renderYard(); renderYardSheet(); }
 $('clearYard').onclick = $('clearYard2').onclick = clearYard;
-const dleftOf = it => daysUntil(it.d.deadline);
+const dleftOf = it => daysUntil(it.d.deadline, today);
 // most urgent first: by days left, then scams, then letters with no date, banished last
 const yardRank = it => it.banished ? 1e6 : dleftOf(it) !== null ? dleftOf(it) : it.d.scam_risk === 'high' ? 5e5 : 4e5;
 // open letters due within 3 days (or overdue) haunt you
@@ -631,20 +586,9 @@ function whereFor(kind, d, text){
   if (quote) { for (const term of terms) if (term && String(quote).toLowerCase().includes(term.toLowerCase())) return whereInLetter({ term, quote }, ''); return esc(quote); }
   return '';
 }
-function redact(s){
-  let n = 0; const hit = r => { n++; return r; };
-  s = s.replace(/\b[STFGM]\d{7}[A-Z]\b/gi, () => hit('[ID hidden]'));
-  s = s.replace(/[\w.+-]+@[\w-]+\.[\w.]+/g, m => hit('•••' + m.slice(m.indexOf('@'))));
-  s = s.replace(/\b(?:\d[ -]?){10,19}\b/g, m => hit('••••' + m.replace(/\D/g,'').slice(-4)));
-  s = s.replace(/\b(account|acct|a\/c|card|policy|ref(?:erence)?|no\.?|number)(\s*(?:no\.?|number)?\s*[:#]?\s*)(\d[\d -]{6,}\d)/gi, (m, a, b, num) => hit(a + b + '••••' + num.replace(/\D/g,'').slice(-4)));
-  s = s.replace(/#\d{1,3}-\d{1,5}\b/g, () => hit('#••-•••'));
-  s = s.replace(/\b(Singapore\s*|S\s?\()\d{6}\)?/gi, () => hit('Singapore ••••••'));
-  return { text: s, n };
-}
-
 async function show(d, fresh, item){
   const wait = 2600 - (Date.now() - shownAt); if (fresh && wait > 0) await new Promise(r => setTimeout(r, wait));
-  d.days = daysUntil(d.deadline);
+  d.days = daysUntil(d.deadline, today);
   if (fresh) {
     item = { id: Date.now().toString(36) + Math.random().toString(36).slice(2,6), savedAt: Date.now(), d, done: [], banished: false, ctx: current && current.text ? { text: current.text, lang: current.lang, pages: 1 } : { lang: current && current.lang, pages: current && current.images ? current.images.length : 1 } };
     yard.unshift(item); yard = yard.slice(0, 15); saveYard();

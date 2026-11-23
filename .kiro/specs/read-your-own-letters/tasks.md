@@ -1,6 +1,6 @@
 # Implementation Plan
 
-- [ ] 1. Extract shared logic into `lib/checks.js`
+- [x] 1. Extract shared logic into `lib/checks.js`
   - Move `applyChecks`, `daysUntil`, `redact` and `parseJSON` out of `app.js`; pass `today` in as a parameter
   - Export for Node (`module.exports`) and keep browser globals; load it in `index.html` before `app.js`
   - Confirm the three samples still render exactly as before

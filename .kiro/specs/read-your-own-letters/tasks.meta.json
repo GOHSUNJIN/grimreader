@@ -12,6 +12,30 @@
         "chatSessionId": "sess_1ecb73b5-3201-45eb-8819-cccbf9e9ef15",
         "timestamp": 1795426381651
       }
+    ],
+    "2.1 Property-based tests for `applyChecks`": [
+      {
+        "executionId": "156eaecf-38c4-45be-963a-ae882bc1b4bc",
+        "chatSessionId": "sess_aca47477-1b3a-46d0-a222-c574b64517d4",
+        "timestamp": 1795426625903
+      },
+      {
+        "executionId": "59e5c7ae-cedb-40a0-a902-fc711c89950b",
+        "chatSessionId": "sess_aca47477-1b3a-46d0-a222-c574b64517d4",
+        "timestamp": 1795426942589
+      },
+      {
+        "executionId": "59e5c7ae-cedb-40a0-a902-fc711c89950b",
+        "chatSessionId": "sess_aca47477-1b3a-46d0-a222-c574b64517d4",
+        "timestamp": 1795427006511
+      }
+    ],
+    "2.2 Property-based tests for `redact`": [
+      {
+        "executionId": "59e5c7ae-cedb-40a0-a902-fc711c89950b",
+        "chatSessionId": "sess_aca47477-1b3a-46d0-a222-c574b64517d4",
+        "timestamp": 1795427011909
+      }
     ]
   }
 }

@@ -1,0 +1,13 @@
+{
+  "name": "grim-reader",
+  "version": "1.0.0",
+  "private": true,
+  "description": "Grim Reader turns a frightening official letter into a calm, plain-language answer.",
+  "license": "MIT",
+  "scripts": {
+    "test": "node --test \"tests/*.test.js\""
+  },
+  "devDependencies": {
+    "fast-check": "^3.23.2"
+  }
+}

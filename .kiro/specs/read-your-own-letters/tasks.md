@@ -6,11 +6,11 @@
   - Confirm the three samples still render exactly as before
   - _Requirements: 5.1_
 
-- [ ] 2. Set up tests
+- [~] 2. Set up tests
   - Add `package.json` with `fast-check` as a dev dependency and `"test": "node --test tests/"`
   - _Requirements: 5_
 
-- [ ] 2.1 Property-based tests for `applyChecks`
+- [x] 2.1 Property-based tests for `applyChecks`
   - Generators for arbitrary verdict objects (missing keys, wrong types, real and invalid dates, all urgency and scam combinations, serious words in type/summary/sender)
   - Properties for acceptance criteria 5.2 to 5.6
   - _Requirements: 5.2, 5.3, 5.4, 5.5, 5.6_

@@ -657,14 +657,15 @@ async function show(d, fresh, item){
   const reasons = d.scam_reasons.filter(r => typeof r === 'string' && r.trim());
   if (d.scam_risk === 'low') $('banner').innerHTML = '';
   else {
-    const li = (r, k) => `<li${k >= 3 ? ' hidden' : ''}>${esc(r)}</li>`, more = reasons.length - 3;
+    // phones show 1 bullet, wide screens 2 (CSS hides the others); the rest wait behind the button
+    const li = (r, k) => `<li${k >= 3 ? ' hidden' : ''} title="${esc(r)}"><span>${esc(r)}</span></li>`, n = reasons.length;
     const fallback = scam ? 'Don’t pay or click anything.' : 'Check with the real organisation before you reply or pay.';
-    $('banner').innerHTML = `<div class="warn scam banner${scam ? '' : ' caution'}" id="scamBox">${ic('shield-alert')}<div><b>${scam ? 'Likely scam.' : 'Check this is real first'}</b>${reasons.length ? `<ul class="reasons" id="scamReasons">${reasons.map(li).join('')}</ul>${more > 0 ? `<button class="inlinebtn" type="button" id="scamMore" aria-expanded="false" aria-controls="scamReasons">+${more} more</button>` : ''}` : `<p class="reasons">${fallback}</p>`}<div class="radarline" id="radarLine" hidden></div></div></div>`;
-    if ($('scamMore')) $('scamMore').onclick = () => { $('scamReasons').querySelectorAll('li[hidden]').forEach(x => x.hidden = false); $('scamMore').remove(); refit(); };
+    $('banner').innerHTML = `<div class="warn scam banner${scam ? '' : ' caution'}" id="scamBox">${ic('shield-alert')}<div><b>${scam ? 'Likely scam.' : 'Check this is real first'}</b>${reasons.length ? `<ul class="reasons" id="scamReasons">${reasons.map(li).join('')}</ul>${n > 1 ? `<button class="inlinebtn${n > 2 ? '' : ' phoneonly'}" type="button" id="scamMore" aria-expanded="false" aria-controls="scamReasons"><span class="lp">+${n - 1} more</span><span class="lw">+${n - 2} more</span></button>` : ''}` : `<p class="reasons">${fallback}</p>`}<div class="radarline" id="radarLine" hidden></div></div></div>`;
+    if ($('scamMore')) $('scamMore').onclick = () => { $('scamReasons').classList.add('open'); $('scamReasons').querySelectorAll('li[hidden]').forEach(x => x.hidden = false); $('scamMore').remove(); refit(); };
   }
   // needs a person: calm card right under the verdict
   const why = clean(d.human_reason || '').trim();
-  $('human').innerHTML = d.needs_human ? `<div class="humancard">${ic('scale')}<div class="ht"><b>Get a real person to check this</b>${why ? `<p>${esc(why)}</p>` : ''}</div><button class="sec" type="button" data-open-help>Open Free Help${ic('arrow-right')}</button></div>` : '';
+  $('human').innerHTML = d.needs_human ? `<div class="humancard">${ic('scale')}<div class="ht"><b>Get a real person to check this</b>${why ? `<p title="${esc(why)}">${esc(why)}</p>` : ''}</div><button class="sec" type="button" data-open-help>Open Free Help${ic('arrow-right')}</button></div>` : '';
   $('human').querySelectorAll('[data-open-help]').forEach(b => b.onclick = () => { selectTab('help'); fit(); const t = document.querySelector('.tab[data-pane="help"]'); if (t) t.focus(); });  if (d.scam_risk !== 'low') scamRadar(item);
 
   const jargon = d.jargon || [];
@@ -768,12 +769,16 @@ async function show(d, fresh, item){
 function overflowing(){
   const card = document.querySelector('.screen.on .card'); if (!card) return false;
   if (card.getBoundingClientRect().bottom > window.innerHeight + 2) return true;
-  const zones = [card, ...card.querySelectorAll('.pane.on, .drop, .side, .rbody')];
+  // Every visible column and pane counts. On wide screens #pane-verdict is always shown but loses its
+  // `.on` class when another tab is picked, so select all .pane and let offsetParent skip hidden ones.
+  const zones = [card, ...card.querySelectorAll('.pane, .drop, .side, .rbody')];
   // Compare real child boxes with each zone's inner bottom. scrollHeight would also count the
   // invisible touch tap areas (::after with a negative inset) and push every phone to the last level.
   const kids = el => [...el.children].flatMap(c => getComputedStyle(c).display === 'contents' ? kids(c) : [c]);
   return zones.some(z => {
     if (!z.offsetParent) return false;
+    // content taller than the box (the 6px slack ignores the invisible touch tap areas)
+    if (z.scrollHeight - z.clientHeight > 6) return true;
     const cs = getComputedStyle(z), limit = z.getBoundingClientRect().bottom - parseFloat(cs.borderBottomWidth) - parseFloat(cs.paddingBottom) + 2;
     return kids(z).some(c => c.offsetParent && c.getBoundingClientRect().bottom > limit);
   });

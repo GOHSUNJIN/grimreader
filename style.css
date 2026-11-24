@@ -255,6 +255,10 @@ button.tile:hover{border-color:var(--pumpkin)}
 .warn .reasons{margin:4px 0 0;padding-left:18px}
 .warn p.reasons{padding-left:0}
 .warn .reasons li{margin:1px 0}
+/* scam reasons: each bullet is clamped to 2 lines at every width; phones show 1 bullet, wide screens 2 */
+.scam .reasons:not(.open) li:nth-child(n+2){display:none}
+.scam .reasons:not(.open) li>span{display:-webkit-box;-webkit-line-clamp:2;-webkit-box-orient:vertical;overflow:hidden}
+.scam .inlinebtn .lw{display:none}
 .warn .inlinebtn{margin-top:2px}
 /* needs a person: calm card under the verdict */
 #human:empty{display:none}
@@ -262,7 +266,7 @@ button.tile:hover{border-color:var(--pumpkin)}
 .humancard>svg{flex:none;width:22px;height:22px;color:var(--gold)}
 .humancard .ht{flex:1 1 170px;min-width:0}
 .humancard b{display:block;font-size:14.5px}
-.humancard p{margin:2px 0 0;font-size:13.5px;line-height:1.35}
+.humancard p{margin:2px 0 0;font-size:13.5px;line-height:1.35;display:-webkit-box;-webkit-line-clamp:2;-webkit-box-orient:vertical;overflow:hidden}
 .humancard .sec{flex:none}
 /* Have ready chips: under the checklist on phones, in the left column on wide screens */
 .have{display:flex;flex-wrap:wrap;align-items:center;gap:6px 8px}
@@ -455,6 +459,10 @@ ul.todo li.done .txt{text-decoration:line-through;color:var(--muted)}
   /* the full checklist sits beside the verdict, so Do This First would only repeat it */
   #pane-verdict .first{display:none}
   #haveV:not(:empty){display:flex}
+  .scam .reasons:not(.open) li:nth-child(2){display:list-item}
+  .scam .reasons:not(.open) li:nth-child(n+3){display:none}
+  .scam .inlinebtn .lp,.scam .inlinebtn.phoneonly{display:none}
+  .scam .inlinebtn .lw{display:inline}
   #haveT{display:none}
   /* the first unticked step stands out, like Do This First on phones */
   ul.todo li.next,ul.todo li.next:hover{box-shadow:inset 0 0 0 1.5px var(--pumpkin);background:linear-gradient(135deg,rgba(255,122,26,.14),rgba(255,122,26,.04))}

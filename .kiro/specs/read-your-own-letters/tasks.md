@@ -43,8 +43,8 @@
   - `ask()` uses it when `window.claude` is missing
   - _Requirements: 4.1, 4.2_
 
-- [ ] 6. Configure and verify on Vercel
-  - Add `LETTER_MODEL` and AI Gateway credentials as environment variables
+- [x] 6. Configure and verify on Vercel
+  - Add `LETTER_MODEL` and `ANTHROPIC_API_KEY` as environment variables
   - Deploy; test a real photo, a PDF and pasted text, in English and one other language, at 390x844 and 1440x900
   - Update the README: move "Reading your own photos and pasted text" and "Ask the Grim Reader" to "Works now"; document the rate limit
   - _Requirements: 1, 2, 3, 4_

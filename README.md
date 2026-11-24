@@ -38,10 +38,18 @@ Grim Reader stitches together parts that don't usually meet: a camera, a languag
 
 ## How We Built It
 - A static web app: `index.html` (markup), `style.css` (styles), `app.js` (behaviour) and `icons.js` (icon data). No framework and no build step, so it loads fast on old phones.
-- The AI reading step sends the letter and a strict JSON prompt to Claude, then runs every answer through our own rule checks (`applyChecks` in `app.js`) before showing it.
+- The AI reading step sends the letter and a strict JSON prompt to Claude through the Anthropic API, using `@ai-sdk/anthropic` and the Vercel AI SDK. Every answer then goes through our own rule checks (`applyChecks` in `app.js`) before it is shown.
+- Two small Vercel Functions in `api/` (`read.js` and `ask.js`) call the model, so the API key stays on the server. They store nothing and never log letter text.
+- Pure logic such as the rule checks and redaction lives in `lib/` and is covered by Node tests, including fast-check property tests.
 - Illustrations (the reaper, envelope and wax seal) are hand-made inline SVG. Icons are from Lucide. Sound effects are generated in the browser with the Web Audio API.
 - A layout routine (`fit()`) tightens spacing step by step so every screen fits on any device without scrolling.
 - Hosted on Vercel.
+
+## How We Used Kiro
+- **Spec.** We wrote the "read your own letters" feature as a Kiro spec (requirements, design and tasks) and worked through the tasks one at a time.
+- **Steering.** Steering files in `.kiro/steering` tell Kiro our tech stack, project structure and product rules, such as "never trust the AI blindly" and our plain-language voice.
+- **Hooks.** Hooks in `.kiro/hooks` review changes against those rules as they are made.
+- **Property tests.** fast-check property tests of the rule checks and date maths found 4 bugs that example-based tests had missed. We fixed all 4.
 
 ## Challenges
 - **Trust.** People shouldn't have to take an AI's word for a legal deadline. "Where It Says This" shows the original sentence, and the rule checks catch impossible dates or missing scam warnings.
@@ -52,23 +60,37 @@ Grim Reader stitches together parts that don't usually meet: a camera, a languag
 Plain language is a design problem as much as a writing one. The biggest improvements came from removing things: one headline, one next step, one tap to see the proof.
 
 ## What's Next
-This repo is the clickable design prototype and the visual target for the full build, which we will make with Kiro.
+Scam Radar (how often a scam was reported this week) and a downloadable reminder file are still to come.
 
-| Works in this prototype | Coming in the Kiro build |
-| --- | --- |
-| All 3 sample letters and every screen | Reading your own photos and pasted text |
-| 30-second tour, intro and Graveyard (saved in your browser) | Ask the Grim Reader follow-up questions |
-| Share menu, Copy and the Google Calendar link | Scam Radar: how often a scam was reported this week |
-| Listen, Where It Says This and Scary Words | Downloadable reminder file |
+## Works Now
+- All 3 sample letters and every screen, with no AI call needed.
+- **Reading your own photos and pasted text.** Photos, PDF, Word and text files and pasted text are read by Claude and checked by our rules.
+- **Ask the Grim Reader.** Follow-up questions about your letter, answered in your language.
+- 30-second tour, intro and Graveyard (saved in your browser).
+- Share menu, Copy and the Google Calendar link.
+- Listen, Where It Says This and Scary Words.
+
+### Rate limit
+To protect the demo budget each person can read 10 letters per 10 minutes. The limit is kept in server memory, so it is best effort and can reset when the server restarts. Ask has its own limit of 10 questions per 10 minutes. Over the limit, the app asks you to wait and try again.
 
 ## Run It Locally
-Open `index.html` in a browser, or serve the folder:
+Install dependencies, pull the environment variables from Vercel and start the dev server:
 
 ```bash
-npx serve .
+npm install
+vercel env pull .env.local
+vercel dev
 ```
 
-To deploy on Vercel: import the repo, set Framework Preset to **Other**, leave Build Command and Output Directory empty, and deploy.
+`.env.local` needs `ANTHROPIC_API_KEY` and `LETTER_MODEL` (an Anthropic model id such as `claude-sonnet-5-5`). The sample letters work without them.
+
+Run the tests:
+
+```bash
+npm test
+```
+
+To deploy on Vercel: import the repo, set Framework Preset to **Other**, leave Build Command and Output Directory empty, add `ANTHROPIC_API_KEY` and `LETTER_MODEL` as environment variables and deploy.
 
 ## Team
 - **Sun Jin**, Developer · [gohsunjin.vercel.app](https://gohsunjin.vercel.app/)

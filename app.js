@@ -653,15 +653,19 @@ async function show(d, fresh, item){
     $('whereBody').innerHTML = `<div class="wwhere"><span class="label">${ic('file-text')}In Your Letter</span><blockquote>${kind === 'deadline' ? dlWhere : amWhere}</blockquote></div>`;
     openOverlay('whereSheet');
   });
-  const w = [];
-  const scamBox = `<div class="warn scam${scam ? ' banner' : ''}" id="scamBox">${ic('shield-alert')}<div><b>${scam ? 'Likely scam.' : 'Why it smells like a scam:'}</b> <span class="reasons">${d.scam_reasons.slice(0,3).map(esc).join(' · ')}</span><div class="radarline" id="radarLine" hidden></div></div></div>`;
-  $('banner').innerHTML = scam && d.scam_reasons.length ? scamBox : '';
-  if (!scam && d.scam_risk !== 'low' && d.scam_reasons.length) w.push(scamBox);
-  else if (d.scam_risk === 'medium' && !d.scam_reasons.length) w.push(`<div class="warn scam" id="scamBox">${ic('shield-alert')}<div><b>This might be a scam.</b> Check with the real organisation first.<div class="radarline" id="radarLine" hidden></div></div></div>`);
-  if (d.needs_human) w.push(`<div class="warn human">${ic('scale')}<div><b>Get a real person to check this.</b> <button class="inlinebtn" type="button" data-open-help>Open Free Help${ic('arrow-right')}</button></div></div>`);
-  $('warns').innerHTML = w.join('');
-  $('warns').querySelectorAll('[data-open-help]').forEach(b => b.onclick = () => { selectTab('help'); fit(); const t = document.querySelector('.tab[data-pane="help"]'); if (t) t.focus(); });
-  if (d.scam_risk !== 'low') scamRadar(item);
+  // scam banner by risk: high is red, medium is amber, low shows nothing
+  const reasons = d.scam_reasons.filter(r => typeof r === 'string' && r.trim());
+  if (d.scam_risk === 'low') $('banner').innerHTML = '';
+  else {
+    const li = (r, k) => `<li${k >= 3 ? ' hidden' : ''}>${esc(r)}</li>`, more = reasons.length - 3;
+    const fallback = scam ? 'Don’t pay or click anything.' : 'Check with the real organisation before you reply or pay.';
+    $('banner').innerHTML = `<div class="warn scam banner${scam ? '' : ' caution'}" id="scamBox">${ic('shield-alert')}<div><b>${scam ? 'Likely scam.' : 'Check this is real first'}</b>${reasons.length ? `<ul class="reasons" id="scamReasons">${reasons.map(li).join('')}</ul>${more > 0 ? `<button class="inlinebtn" type="button" id="scamMore" aria-expanded="false" aria-controls="scamReasons">+${more} more</button>` : ''}` : `<p class="reasons">${fallback}</p>`}<div class="radarline" id="radarLine" hidden></div></div></div>`;
+    if ($('scamMore')) $('scamMore').onclick = () => { $('scamReasons').querySelectorAll('li[hidden]').forEach(x => x.hidden = false); $('scamMore').remove(); refit(); };
+  }
+  // needs a person: calm card right under the verdict
+  const why = clean(d.human_reason || '').trim();
+  $('human').innerHTML = d.needs_human ? `<div class="humancard">${ic('scale')}<div class="ht"><b>Get a real person to check this</b>${why ? `<p>${esc(why)}</p>` : ''}</div><button class="sec" type="button" data-open-help>Open Free Help${ic('arrow-right')}</button></div>` : '';
+  $('human').querySelectorAll('[data-open-help]').forEach(b => b.onclick = () => { selectTab('help'); fit(); const t = document.querySelector('.tab[data-pane="help"]'); if (t) t.focus(); });  if (d.scam_risk !== 'low') scamRadar(item);
 
   const jargon = d.jargon || [];
   $('wordsBtn').hidden = !jargon.length;
@@ -678,8 +682,10 @@ async function show(d, fresh, item){
   $('wordchips').querySelectorAll('.chip').forEach((c, i) => c.onclick = () => pick(i));
   $('wordsBtn').onclick = () => { pick(0); openOverlay('wordsSheet'); };
 
-  const items = [...d.actions, ...d.documents.map(x => `Have ready: ${x}`)].slice(0, 7);
-  $('todo').innerHTML = items.map((a,i) => `<li role="checkbox" aria-checked="${!!item.done[i]}" tabindex="0" class="${item.done[i] ? 'done' : ''}"><span class="box">${ic('check')}</span><span class="txt">${esc(a)}</span></li>`).join('');
+  const items = d.actions;
+  const have = d.documents.length ? `<span class="hl">${ic('file-text')}Have ready</span><ul class="havelist">${d.documents.slice(0, 6).map(x => `<li>${esc(x)}</li>`).join('')}</ul>` : '';
+  $('haveV').innerHTML = have; $('haveT').innerHTML = have;
+  $('todo').innerHTML = items.map((a,i) => `<li role="checkbox" aria-checked="${!!item.done[i]}" tabindex="0" class="${item.done[i] ? 'done' : ''}"><span class="box">${ic('check')}</span><span class="txt">${esc(a)}</span><span class="nextTag" aria-hidden="true">Next</span></li>`).join('');
   $('banished').classList.remove('on');
   const update = fromClick => {
     refit();
@@ -691,6 +697,7 @@ async function show(d, fresh, item){
     if (finished) { $('banished').classList.add('on'); if (fromClick && !item.banished) { batBurst(); sfx('banish'); say('Letter banished'); try { navigator.vibrate && navigator.vibrate([40, 60, 40]); } catch {} } }
     else $('banished').classList.remove('on');
     const next = all.findIndex(li => !li.classList.contains('done'));
+    all.forEach((li, k) => { li.classList.toggle('next', k === next); if (k === next) li.setAttribute('aria-current', 'step'); else li.removeAttribute('aria-current'); });
     $('first').hidden = next < 0;
     if (next >= 0) { $('firstTxt').textContent = items[next]; $('firstDue').innerHTML = `${ic('list-checks')}Step ${next + 1} of ${items.length}`; $('firstDone').onclick = () => all[next].click(); }
     if (item.banished !== !!finished) { item.banished = !!finished; if (fromClick) saveYard(); }

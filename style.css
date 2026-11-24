@@ -244,12 +244,34 @@ button.tile:hover{border-color:var(--pumpkin)}
 .warn svg{margin-top:1px}
 .warn.scam{background:rgba(255,90,105,.12);border:1px solid var(--blood)}
 .warn.scam svg{color:var(--blood)}
-.warn.human{background:rgba(233,196,106,.1);border:1px solid var(--gold)}
-.warn.human svg{color:var(--gold)}
+
 #banner:empty{display:none}
 .warn.banner{border-width:2px;padding:12px 14px;font-size:14.5px;background:linear-gradient(135deg,rgba(255,90,105,.22),rgba(183,140,255,.12))}
 .warn.banner b{color:#ffd7db;font-size:15px}
 .warn.banner>svg{width:22px;height:22px}
+.warn.scam.caution{background:linear-gradient(135deg,rgba(255,176,32,.2),rgba(183,140,255,.08));border-color:var(--amber)}
+.warn.scam.caution>svg{color:var(--amber)}
+.warn.banner.caution b{color:#ffe9b0}
+.warn .reasons{margin:4px 0 0;padding-left:18px}
+.warn p.reasons{padding-left:0}
+.warn .reasons li{margin:1px 0}
+.warn .inlinebtn{margin-top:2px}
+/* needs a person: calm card under the verdict */
+#human:empty{display:none}
+.humancard{display:flex;flex-wrap:wrap;gap:8px 10px;align-items:center;border-radius:14px;padding:10px 12px;background:rgba(233,196,106,.08);border:1px solid rgba(233,196,106,.55)}
+.humancard>svg{flex:none;width:22px;height:22px;color:var(--gold)}
+.humancard .ht{flex:1 1 170px;min-width:0}
+.humancard b{display:block;font-size:14.5px}
+.humancard p{margin:2px 0 0;font-size:13.5px;line-height:1.35}
+.humancard .sec{flex:none}
+/* Have ready chips: under the checklist on phones, in the left column on wide screens */
+.have{display:flex;flex-wrap:wrap;align-items:center;gap:6px 8px}
+.have:empty{display:none}
+#haveV{display:none}
+.have .hl{display:inline-flex;align-items:center;gap:5px;font-size:12px;font-weight:700;text-transform:uppercase;letter-spacing:.08em;color:var(--muted)}
+.have .hl svg{width:14px;height:14px}
+.havelist{list-style:none;margin:0;padding:0;display:flex;flex-wrap:wrap;gap:6px}
+.havelist li{font-size:13px;line-height:1.3;border:1px solid var(--line);background:var(--card2);border-radius:999px;padding:3px 10px}
 .radarline{display:flex;gap:6px;align-items:center;margin-top:6px;padding-top:6px;border-top:1px solid rgba(255,90,105,.35);color:var(--ink)}
 .radarline svg{color:var(--hex);width:16px;height:16px}
 /* tabs: at the bottom on phones, on top of the right column on wider screens */
@@ -265,6 +287,7 @@ button.tile:hover{border-color:var(--pumpkin)}
 ul.todo{list-style:none;margin:0;padding:0}
 ul.todo li{display:flex;gap:10px;padding:9px 8px;align-items:flex-start;border-radius:12px;cursor:pointer;font-size:15px;line-height:1.4}
 ul.todo li:hover{background:var(--card2)}
+.nextTag{display:none;margin-left:auto;flex:none;align-self:center;font-size:11px;font-weight:700;letter-spacing:.08em;text-transform:uppercase;color:var(--pumpkin)}
 ul.todo .box{flex:none;width:22px;height:22px;border-radius:7px;border:2px solid #6a5c86;display:grid;place-items:center;color:transparent;transition:.2s}
 ul.todo .box svg{width:14px;height:14px}
 ul.todo li.done .box{background:var(--slime);border-color:var(--slime);color:#0b0912}
@@ -431,6 +454,11 @@ ul.todo li.done .txt{text-decoration:line-through;color:var(--muted)}
   #pane-verdict{display:flex}
   /* the full checklist sits beside the verdict, so Do This First would only repeat it */
   #pane-verdict .first{display:none}
+  #haveV:not(:empty){display:flex}
+  #haveT{display:none}
+  /* the first unticked step stands out, like Do This First on phones */
+  ul.todo li.next,ul.todo li.next:hover{box-shadow:inset 0 0 0 1.5px var(--pumpkin);background:linear-gradient(135deg,rgba(255,122,26,.14),rgba(255,122,26,.04))}
+  ul.todo li.next .nextTag{display:inline-block}
 }
 @media (min-width:900px){
   /* header buttons show their labels */
@@ -586,7 +614,15 @@ body.fit2 .iconbtn{width:auto;min-width:34px;height:34px}
 body.fit2 .first .row{justify-content:flex-end;margin-top:-34px;pointer-events:none}
 body.fit2 .first .row .btn{pointer-events:auto}
 body.fit2 .first p{padding-right:120px;min-height:30px}
-body.fit2 .warn .reasons{display:-webkit-box;-webkit-line-clamp:2;-webkit-box-orient:vertical;overflow:hidden}
+body.fit2 .warn .reasons{margin-top:2px}
+body.fit2 .humancard{padding:7px 10px}
+body.fit2 .humancard{display:grid;grid-template-columns:auto 1fr auto;align-items:center;gap:2px 8px}
+body.fit2 .humancard .ht{display:contents}
+body.fit2 .humancard>svg{grid-area:1/1}
+body.fit2 .humancard b{grid-area:1/2}
+body.fit2 .humancard .sec{grid-area:1/3;padding-top:5px;padding-bottom:5px}
+body.fit2 .humancard p{grid-area:2/1/3/-1;margin:0}
+body.fit2 .humancard p{font-size:13px;line-height:1.3}
 
 body.fit3 .drop .empty .env,body.fit3 .drop .empty .envstack,body.fit3 .remindcard .rt small,body.fit3 .kinds,body.fit3 .actions .sec span{display:none}
 body.fit3 .head{margin-bottom:-2px}
@@ -598,7 +634,15 @@ body.fit3 .tile.due b{font-size:20px}
 body.fit3 .tile .where{font-size:0;gap:0}
 body.fit3 .tile .where svg{width:15px;height:15px}
 body.fit3 .warn{font-size:12.5px;padding:6px 9px}
-body.fit3 .warn .reasons{-webkit-line-clamp:1}
+body.fit3 .warn .reasons li{margin:0}
+body.fit3 .warn.banner>svg,body.fit3 .humancard>svg{display:none}
+body.fit3 .humancard{grid-template-columns:1fr auto}
+body.fit3 .humancard b{grid-area:1/1}
+body.fit3 .humancard .sec{grid-area:1/2}
+body.fit3 .humancard p{grid-area:2/1/3/-1}
+body.fit3 .humancard b,body.fit3 .humancard p{font-size:12.5px}
+body.fit3 .have{gap:4px 6px}
+body.fit3 .havelist li{font-size:12px;padding:2px 8px}
 body.fit3 .radarline{margin-top:4px;padding-top:4px}
 body.fit3 .actions .sec{flex-direction:row;padding:5px 2px}
 

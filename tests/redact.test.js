@@ -29,3 +29,17 @@ test('redact leaves no run of 10+ digits and no full email address', () => {
 test('redact hides a 25 digit run', () => {
   assert.doesNotMatch(redact('1'.repeat(25)).text, /\d{10,}/);
 });
+
+// Validates: Requirements 5.7
+test('words around a hidden number stay separated by whitespace', () => {
+  const word = fc.stringMatching(/^[a-z]{3,8}$/);
+  fc.assert(fc.property(word, fc.oneof(nric, email, card, account, longRun, unit, postcode), word, (a, hidden, b) => {
+    const out = redact(`${a} ${hidden} ${b}`).text;
+    assert.ok(out.startsWith(a + ' '), out);
+    assert.ok(out.endsWith(' ' + b), out);
+  }), { numRuns: 500 });
+});
+
+test('a spaced card style number keeps the space after it', () => {
+  assert.equal(redact('Quote account 7720 4419 0083 5561 when you call').text, 'Quote account ••••5561 when you call');
+});

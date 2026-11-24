@@ -679,7 +679,7 @@ async function show(d, fresh, item){
   $('wordsBtn').onclick = () => { pick(0); openOverlay('wordsSheet'); };
 
   const items = [...d.actions, ...d.documents.map(x => `Have ready: ${x}`)].slice(0, 7);
-  $('todo').innerHTML = items.map((a,i) => `<li role="checkbox" aria-checked="${!!item.done[i]}" tabindex="0" class="${item.done[i] ? 'done' : ''}"><span class="box">${ic('check')}</span><span class="txt">${esc(redact(a).text)}</span></li>`).join('');
+  $('todo').innerHTML = items.map((a,i) => `<li role="checkbox" aria-checked="${!!item.done[i]}" tabindex="0" class="${item.done[i] ? 'done' : ''}"><span class="box">${ic('check')}</span><span class="txt">${esc(a)}</span></li>`).join('');
   $('banished').classList.remove('on');
   const update = fromClick => {
     refit();
@@ -692,7 +692,7 @@ async function show(d, fresh, item){
     else $('banished').classList.remove('on');
     const next = all.findIndex(li => !li.classList.contains('done'));
     $('first').hidden = next < 0;
-    if (next >= 0) { $('firstTxt').textContent = redact(items[next]).text; $('firstDue').innerHTML = `${ic('list-checks')}Step ${next + 1} of ${items.length}`; $('firstDone').onclick = () => all[next].click(); }
+    if (next >= 0) { $('firstTxt').textContent = items[next]; $('firstDue').innerHTML = `${ic('list-checks')}Step ${next + 1} of ${items.length}`; $('firstDone').onclick = () => all[next].click(); }
     if (item.banished !== !!finished) { item.banished = !!finished; if (fromClick) saveYard(); }
   };
   $('todo').querySelectorAll('li').forEach((li, i) => {
@@ -710,8 +710,7 @@ async function show(d, fresh, item){
     if (dl) $('ics').onclick = async () => { try { await dl.save({ filename: 'grim-reader-deadline.ics', data: icsFor(d) }); $('ics').innerHTML = ic('check') + 'Reminder Saved'; } catch {} };
   }
 
-  const shareText = `Grim Reader checked a letter for me.\n\n${clean(d.letter_type)}${d.sender ? ' from ' + clean(d.sender) : ''}\n${clean(d.summary)}${d.deadline ? `\nDeadline: ${fmtDate(d.deadline)}` : ''}${d.amount ? `\nAmount: ${clean(d.amount)}` : ''}${scam ? '\nThis looks like a scam.' : ''}\n\nTo do:\n- ${d.actions.map(clean).join('\n- ')}${d.documents.length ? `\n\nHave ready:\n- ${d.documents.map(clean).join('\n- ')}` : ''}`;
-  const safe = redact(shareText), safeText = safe.text + (safe.n ? `\n\n(Grim Reader hid ${safe.n} personal detail${safe.n === 1 ? '' : 's'}.)` : '');
+  const safe = buildShare(d, { scam, clean, fmtDate }), safeText = safe.text;
   const enc = encodeURIComponent(safeText), subj = encodeURIComponent('Grim Reader: ' + clean(d.letter_type || 'a letter'));
   const opts = [
     { id: 'wa', name: 'WhatsApp', icon: 'message-circle', col: '#25d366', href: 'https://wa.me/?text=' + enc },

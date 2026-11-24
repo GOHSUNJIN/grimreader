@@ -8,11 +8,12 @@ const MAX_IMAGE_BYTES = 4 * 1024 * 1024;
 const LIMIT = 10;
 const WINDOW_MS = 10 * 60 * 1000;
 
-// Default model call: AI SDK through AI Gateway. Model comes from LETTER_MODEL.
+// Default model call: AI SDK with the Anthropic provider. Model comes from LETTER_MODEL.
 async function generate({ model, prompt, images }) {
   const { generateText } = await import('ai');
+  const { anthropic } = await import('@ai-sdk/anthropic');
   const content = [{ type: 'text', text: prompt }, ...images.map((image) => ({ type: 'image', image }))];
-  const { text } = await generateText({ model, messages: [{ role: 'user', content }] });
+  const { text } = await generateText({ model: anthropic(model || 'claude-sonnet-5-5'), messages: [{ role: 'user', content }] });
   return text;
 }
 

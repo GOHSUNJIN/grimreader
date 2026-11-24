@@ -17,11 +17,11 @@ inclusion: always
 ## Hosting
 - Vercel. Framework preset "Other", no build command, output is the repo root.
 - Server code goes in `api/*.js` as Vercel Functions (Node.js runtime, Fluid Compute). Keep them small and stateless.
-- Secrets live in Vercel environment variables, never in the repo or the browser.
+- Secrets live in Vercel environment variables (`ANTHROPIC_API_KEY`, `LETTER_MODEL`), never in the repo or the browser. Locally they go in `.env.local`.
 
 ## AI
 - The letter reader asks the model for ONE JSON object (see `prompt()` in `app.js` for the exact keys) and the client parses it with `parseJSON` then runs `applyChecks`.
-- Prefer the Vercel AI SDK with AI Gateway model strings (`"provider/model"`), configured by environment variable, so the model can be swapped without code changes.
+- Use the Vercel AI SDK with the Anthropic API directly through `@ai-sdk/anthropic` (no AI Gateway). The model is set by the `LETTER_MODEL` environment variable (an Anthropic model id like `claude-sonnet-5-5`), so it can be swapped without code changes.
 
 ## Conventions
 - Keep `app.js` sections in their current order; each starts with a `// ---------- name ----------` comment.

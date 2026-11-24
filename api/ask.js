@@ -2,10 +2,11 @@
 // Stateless apart from a best-effort in-memory rate limit. Never logs request bodies.
 const { makeLimiter, MAX_TEXT } = require('./read.js');
 
-// Default model call: AI SDK through AI Gateway. Model comes from LETTER_MODEL.
+// Default model call: AI SDK with the Anthropic provider. Model comes from LETTER_MODEL.
 async function generate({ model, prompt }) {
   const { generateText } = await import('ai');
-  const { text } = await generateText({ model, messages: [{ role: 'user', content: prompt }] });
+  const { anthropic } = await import('@ai-sdk/anthropic');
+  const { text } = await generateText({ model: anthropic(model || 'claude-sonnet-5-5'), messages: [{ role: 'user', content: prompt }] });
   return text;
 }
 

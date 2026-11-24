@@ -2,10 +2,10 @@
 
 ## Overview
 
-Add two Vercel Functions, `api/read.js` and `api/ask.js`, that call an AI model through the Vercel AI SDK and AI Gateway. The browser keeps building the prompt and keeps the rule checks, so the server stays a thin, stateless proxy. Pure logic moves into `lib/checks.js` so Node tests (including property-based tests) can run it.
+Add two Vercel Functions, `api/read.js` and `api/ask.js`, that call an AI model through the Vercel AI SDK, using the Anthropic API directly via `@ai-sdk/anthropic`. The browser keeps building the prompt and keeps the rule checks, so the server stays a thin, stateless proxy. Pure logic moves into `lib/checks.js` so Node tests (including property-based tests) can run it.
 
 ```
-browser (app.js)                         Vercel                       AI Gateway
+browser (app.js)                         Vercel                       Anthropic API
 run() ── POST /api/read {prompt, images} ──> api/read.js ── generateText ──> model
      <─ { verdict JSON } ──────────────────  (parse JSON, size + rate limits)
 applyChecks(verdict) -> show()
@@ -22,7 +22,7 @@ applyChecks(verdict) -> show()
 ### `api/read.js` (new)
 - `POST` JSON body: `{ prompt: string, images?: string[] }` where images are base64 JPEG data URLs (the client already converts every page to JPEG at max 1600px with `toJpeg`).
 - Validates sizes (Requirement 2.2, 2.3) before calling the model.
-- Calls `generateText({ model: process.env.LETTER_MODEL, messages: [{ role: 'user', content: [text part, ...image parts] }] })` from the `ai` package. `LETTER_MODEL` is an AI Gateway model string, for example a current Claude Sonnet model; check the exact ID in the AI Gateway model list.
+- Calls `generateText({ model: anthropic(process.env.LETTER_MODEL || 'claude-sonnet-5-5'), messages: [{ role: 'user', content: [text part, ...image parts] }] })` from the `ai` package, with `anthropic` from `@ai-sdk/anthropic` (loaded with a dynamic import). `LETTER_MODEL` is an Anthropic model id like `claude-sonnet-5-5`.
 - Parses the reply with `parseJSON` and returns it, or 502 `bad_reply`.
 - Rate limit: in-memory sliding window keyed by `x-forwarded-for` (best effort; Fluid Compute reuses instances). Good enough for a hackathon demo; note it in the README.
 - Never logs request bodies.
@@ -61,6 +61,6 @@ The verdict JSON is unchanged (keys defined in `prompt()`): `letter_type, sender
 - **Manual check** on the live site at 390x844 and 1440x900 with a real photo, a PDF and pasted text, in English and one other language.
 
 ## Security and privacy
-- API key only in Vercel env vars (`AI_GATEWAY_API_KEY`, or OIDC on Vercel).
+- API key only in Vercel env vars (`ANTHROPIC_API_KEY`, read by `@ai-sdk/anthropic`; `LETTER_MODEL` sets the model).
 - No storage, no logging of letter content.
 - Size and rate limits protect the budget during judging.
